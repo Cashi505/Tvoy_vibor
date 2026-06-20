@@ -346,110 +346,59 @@
         </div>
     </section>
 
-    <!-- MENU -->
-    <section class="menu-section" id="menu">
+    <!-- MENU / SCHEDULE -->
+    <section class="sched-section" id="menu">
         <div class="container">
             <div class="section-header reveal-up">
-                <h2 class="section-title">Более 200 <em>уникальных блюд</em></h2>
-                <p class="section-sub">Меню обновляется каждые 4 недели - никаких повторений</p>
+                <span class="section-eyebrow">Пример меню</span>
+                <h2 class="section-title">Меню <em>на неделю</em></h2>
+                <p class="section-sub">Выберите программу — и увидите точное расписание питания на каждый день</p>
             </div>
-            <div class="menu-grid">
-                <div class="menu-card reveal-up delay-1">
-                    <div class="menu-card-img">
-                        <img src="images/menu/tuna-salad.jpeg" alt="Тунец с овощами" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Салаты</span>
-                        <h4>Тунец с овощами</h4>
-                        <p>Тунец, микс зелени, черри, оливковое масло, лимон</p>
-                        <div class="menu-macros">
-                            <span>Б 24г</span>
-                            <span>Ж 8г</span>
-                            <span>У 12г</span>
-                            <span class="menu-kcal">320 ккал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-card reveal-up delay-2">
-                    <div class="menu-card-img">
-                        <img src="images/menu/chicken-breast.jpeg" alt="Куриная грудка" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Основное</span>
-                        <h4>Куриная грудка</h4>
-                        <p>Запечённая грудка с пряными травами, гречка</p>
-                        <div class="menu-macros">
-                            <span>Б 38г</span>
-                            <span>Ж 6г</span>
-                            <span>У 32г</span>
-                            <span class="menu-kcal">420 ккал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-card reveal-up delay-3">
-                    <div class="menu-card-img">
-                        <img src="images/menu/oatmeal-berries.jpeg" alt="Овсяная каша" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Завтрак</span>
-                        <h4>Овсяная каша</h4>
-                        <p>С ягодами, мёдом и семенами чиа</p>
-                        <div class="menu-macros">
-                            <span>Б 12г</span>
-                            <span>Ж 5г</span>
-                            <span>У 48г</span>
-                            <span class="menu-kcal">290 ккал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-card reveal-up delay-1">
-                    <div class="menu-card-img">
-                        <img src="images/menu/beef-steak.jpeg" alt="Говяжий стейк" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Основное</span>
-                        <h4>Говяжий стейк</h4>
-                        <p>Нежирная говядина, запечённые сезонные овощи</p>
-                        <div class="menu-macros">
-                            <span>Б 42г</span>
-                            <span>Ж 14г</span>
-                            <span>У 8г</span>
-                            <span class="menu-kcal">480 ккал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-card reveal-up delay-2">
-                    <div class="menu-card-img">
-                        <img src="images/menu/chicken-soup.jpeg" alt="Куриный суп" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Супы</span>
-                        <h4>Куриный суп</h4>
-                        <p>Бульон, нут, сельдерей, свежая зелень</p>
-                        <div class="menu-macros">
-                            <span>Б 18г</span>
-                            <span>Ж 4г</span>
-                            <span>У 22г</span>
-                            <span class="menu-kcal">200 ккал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-card reveal-up delay-3">
-                    <div class="menu-card-img">
-                        <img src="images/menu/protein-box.jpeg" alt="Протеиновый бокс" loading="lazy">
-                    </div>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">Снеки</span>
-                        <h4>Протеиновый бокс</h4>
-                        <p>Яйца, сыр, огурцы, творог, орехи</p>
-                        <div class="menu-macros">
-                            <span>Б 28г</span>
-                            <span>Ж 12г</span>
-                            <span>У 6г</span>
-                            <span class="menu-kcal">240 ккал</span>
-                        </div>
-                    </div>
-                </div>
+
+            <!-- Program selector -->
+            <div class="sched-programs reveal-up delay-1">
+                <button class="sched-prog active" data-prog="0">
+                    <span class="sched-prog-name">Похудение</span>
+                    <span class="sched-prog-kcal">900 ккал/день</span>
+                </button>
+                <button class="sched-prog" data-prog="1">
+                    <span class="sched-prog-name">Поддержание</span>
+                    <span class="sched-prog-kcal">1200 ккал/день</span>
+                </button>
+                <button class="sched-prog" data-prog="2">
+                    <span class="sched-prog-name">Сбалансированное</span>
+                    <span class="sched-prog-kcal">1800 ккал/день</span>
+                </button>
+                <button class="sched-prog" data-prog="3">
+                    <span class="sched-prog-name">Набор массы</span>
+                    <span class="sched-prog-kcal">2500 ккал/день</span>
+                </button>
+                <button class="sched-prog" data-prog="4">
+                    <span class="sched-prog-name">Как дома</span>
+                    <span class="sched-prog-kcal">3000 ккал/день</span>
+                </button>
+            </div>
+
+            <!-- Day selector -->
+            <div class="sched-days reveal-up delay-2">
+                <button class="sched-day active" data-day="0">Пн</button>
+                <button class="sched-day" data-day="1">Вт</button>
+                <button class="sched-day" data-day="2">Ср</button>
+                <button class="sched-day" data-day="3">Чт</button>
+                <button class="sched-day" data-day="4">Пт</button>
+                <button class="sched-day" data-day="5">Сб</button>
+            </div>
+
+            <!-- Daily summary bar (populated by JS) -->
+            <div class="sched-summary reveal-up delay-3" id="schedSummary"></div>
+
+            <!-- Meal grid (populated by JS) -->
+            <div class="sched-grid" id="schedGrid"></div>
+
+            <!-- Footer -->
+            <div class="sched-footer reveal-up">
+                <p class="sched-footer-note">Меню составляется индивидуально нутрициологом и обновляется каждые 4 недели</p>
+                <a href="#order" class="btn btn-primary btn-large">Попробовать программу</a>
             </div>
         </div>
     </section>
