@@ -314,20 +314,46 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         return new Date(y, m - 1, d);
     }
 
-    /* --- Понедельник текущей недели --- */
-    function monday() {
-        const t = new Date();
-        t.setDate(t.getDate() + (t.getDay() === 0 ? -6 : 1 - t.getDay()));
-        t.setHours(0, 0, 0, 0);
-        return t;
+    /* --- Ссылка Google Drive → прямой URL картинки --- */
+    function photoUrl(val) {
+        if (!val) return '';
+        if (val.startsWith('http')) {
+            const m = val.match(/\/file\/d\/([^/?]+)/);
+            if (m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+            return val;
+        }
+        return 'images/menu/' + val;
     }
 
-    function inCurrentWeek(s) {
-        const dt  = toDate(s);
-        const mon = monday();
-        const sat = new Date(mon);
-        sat.setDate(mon.getDate() + 5);
-        sat.setHours(23, 59, 59, 999);
+    /* --- Понедельник целевой недели ---
+         Пн–Пт: текущая неделя. Сб–Вс: следующая.
+         Если данных нет — берём ближайшую будущую неделю с данными. --- */
+    function targetMonday(allDates) {
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const d = today.getDay();
+        const base = new Date(today);
+        // Сб(6) или Вс(0) → смотрим следующую неделю
+        base.setDate(today.getDate() + (d === 6 ? 2 : d === 0 ? 1 : 1 - d));
+
+        // Собираем все понедельники из данных
+        const monSet = new Set();
+        allDates.forEach(s => {
+            const dt = toDate(s); const wd = dt.getDay();
+            const mon = new Date(dt);
+            mon.setDate(dt.getDate() + (wd === 0 ? -6 : 1 - wd));
+            mon.setHours(0, 0, 0, 0);
+            monSet.add(mon.getTime());
+        });
+        const sorted = [...monSet].sort((a, b) => a - b);
+        // Предпочитаем base-неделю, иначе — ближайшую будущую
+        const found = sorted.find(t => t >= base.getTime());
+        return found ? new Date(found) : (sorted.length ? new Date(sorted[sorted.length - 1]) : null);
+    }
+
+    function inWeek(s, mon) {
+        if (!mon) return false;
+        const dt = toDate(s);
+        const sat = new Date(mon); sat.setDate(mon.getDate() + 5); sat.setHours(23, 59, 59, 999);
         return dt >= mon && dt <= sat;
     }
 
@@ -342,7 +368,7 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         dishLib = {};
         // Колонки: Название | Фото | Вес | Белки | Жиры | Углеводы | Ккал
         rows.forEach(([name, photo, w, p, f, c, e]) => {
-            if (name) dishLib[name] = { img: 'images/menu/' + photo, w: +w, p: +p, f: +f, c: +c, e: +e };
+            if (name) dishLib[name] = { img: photoUrl(photo), w: +w, p: +p, f: +f, c: +c, e: +e };
         });
     }
 
@@ -352,7 +378,9 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         const res  = await fetch(csvUrl(name));
         const rows = parseCSV(await res.text());
         // Колонки: Дата | Приём | Блюдо
-        weekRows = rows.filter(r => r[0] && inCurrentWeek(r[0]));
+        const allDates = rows.filter(r => r[0]).map(r => r[0]);
+        const mon = targetMonday(allDates);
+        weekRows = rows.filter(r => r[0] && inWeek(r[0], mon));
         const seen = new Set();
         weekDates = [];
         weekRows.forEach(r => { if (!seen.has(r[0])) { seen.add(r[0]); weekDates.push(r[0]); } });
