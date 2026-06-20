@@ -584,20 +584,87 @@ em { font-style: italic; }
 }
 
 /* ============================================
-   CALCULATOR - full-width centered layout
-   (distinct from the 2-col About section)
+   MENU + CALCULATOR MERGED LAYOUT
    ============================================ */
-.calculator {
-    background: var(--bg-section);
-    padding: clamp(5rem, 10vw, 9rem) 0;
+.menu-top-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 400px) 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: start;
 }
-.calc-form {
-    max-width: 760px;
-    margin: 0 auto;
+.menu-calc-panel {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     overflow: hidden;
+}
+.menu-panel-label {
+    padding: 1rem 1.5rem 0;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+}
+.menu-prog-panel {
+    display: flex;
+    flex-direction: column;
+}
+.menu-prog-panel .sched-programs {
+    flex-direction: column;
+    margin-bottom: 0;
+    gap: 0.4rem;
+}
+.menu-prog-panel .sched-prog {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.9rem 1.3rem;
+    text-align: left;
+}
+.menu-prog-panel .menu-panel-label {
+    padding: 0 0 0.6rem 0;
+}
+
+/* Day label with date (two-line) */
+.day-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.day-date {
+    font-size: 0.62rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1;
+    transition: color 0.25s;
+}
+.sched-day:hover .day-date { color: var(--gold); }
+.sched-day.active .day-date { color: rgba(200,160,80,0.65); }
+
+/* "В разработке" placeholder */
+.sched-wip {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+.sched-wip svg { color: var(--gold); opacity: 0.65; margin-bottom: 0.4rem; }
+.sched-wip-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+.sched-wip-text {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    max-width: 400px;
+    line-height: 1.7;
 }
 .calc-form-inner {
     padding: clamp(1.8rem, 4vw, 2.8rem);
@@ -792,7 +859,9 @@ em { font-style: italic; }
     flex-wrap: wrap;
 }
 .sched-day {
-    width: 50px; height: 50px;
+    min-width: 60px;
+    height: auto;
+    padding: 0.5rem 0.65rem;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: none;
@@ -803,8 +872,10 @@ em { font-style: italic; }
     cursor: pointer;
     transition: all 0.25s var(--ease);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.08rem;
 }
 .sched-day:hover {
     border-color: var(--border-gold);
@@ -982,6 +1053,9 @@ em { font-style: italic; }
 @media (max-width: 900px) {
     .sched-grid { grid-template-columns: repeat(2, 1fr); }
     .sched-card-img { height: 148px; }
+    .menu-top-grid { grid-template-columns: 1fr; }
+    .menu-prog-panel .sched-programs { flex-direction: row; flex-wrap: wrap; }
+    .menu-prog-panel .sched-prog { flex-direction: column; align-items: center; padding: 0.65rem 1.1rem; }
 }
 @media (max-width: 640px) {
     .sched-programs { gap: 0.35rem; }
@@ -989,7 +1063,9 @@ em { font-style: italic; }
     .sched-prog-name { font-size: 0.78rem; }
     .sched-grid { grid-template-columns: 1fr 1fr; gap: 0.65rem; }
     .sched-card-img { height: 120px; }
-    .sched-day { width: 42px; height: 42px; font-size: 0.76rem; }
+    .sched-day { min-width: 52px; padding: 0.42rem 0.5rem; }
+    .day-name { font-size: 0.73rem; }
+    .day-date { font-size: 0.56rem; }
     .sched-sum-item b { font-size: 1.15rem; }
 }
 @media (max-width: 420px) {

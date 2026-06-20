@@ -144,6 +144,13 @@ document.getElementById('calcBtn').addEventListener('click', () => {
         `Рекомендуем программу "${match.name}" (${match.hint})`;
     ctaEl.style.display = 'inline-flex';
 
+    // Автоматически выбираем программу в блоке меню
+    const matchBtn = [...document.querySelectorAll('.sched-prog')]
+        .find(b => b.querySelector('.sched-prog-name')?.textContent.trim() === match.name);
+    if (matchBtn && !matchBtn.classList.contains('active')) {
+        matchBtn.click();
+    }
+
     setTimeout(() => {
         resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
@@ -284,9 +291,10 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
     const summary = document.getElementById('schedSummary');
     if (!grid) return;
 
-    let dishLib     = {};  // { "Название" → { img, w, p, f, c, e } }
-    let weekRows    = [];  // строки текущей недели из вкладки программы
-    let weekDates   = [];  // уникальные даты текущей недели по порядку
+    let dishLib       = {};  // { "Название" → { img, w, p, f, c, e } }
+    let weekRows      = [];  // строки текущей программы
+    let weekDates     = [];  // уникальные даты из вкладки программы
+    let referenceDates = []; // даты из последней успешной загрузки (для заглушки)
     let selDay      = 0;
     let loadedSheet = '';
 
@@ -357,8 +365,16 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         return dt >= mon && dt <= sat;
     }
 
+    /* --- Проверка формата ДД.ММ.ГГГГ --- */
+    function isDate(s) {
+        return /^\d{2}\.\d{2}\.\d{4}$/.test(s);
+    }
+
+    /* --- "Пн" + "22.06" как HTML (два ряда) --- */
     function dayLabel(s) {
-        return ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'][toDate(s).getDay()];
+        const [d, m] = s.split('.');
+        const name = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'][toDate(s).getDay()];
+        return `<span class="day-name">${name}</span><span class="day-date">${d}.${m}</span>`;
     }
 
     /* --- Загрузка Справочника --- */
@@ -377,11 +393,12 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         if (name === loadedSheet) { render(); return; }
         const res  = await fetch(csvUrl(name));
         const rows = parseCSV(await res.text());
-        // Колонки: Дата | Приём | Блюдо
-        weekRows = rows.filter(r => r[0]);
+        // Колонки: Дата | Приём | Блюдо — фильтруем только строки с настоящими датами
+        weekRows = rows.filter(r => r[0] && isDate(r[0]));
         const seen = new Set();
         weekDates = [];
         weekRows.forEach(r => { if (!seen.has(r[0])) { seen.add(r[0]); weekDates.push(r[0]); } });
+        if (weekDates.length > 0) referenceDates = [...weekDates];
         loadedSheet = name;
         selDay = 0;
         rebuildDayTabs();
@@ -392,13 +409,16 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
     function rebuildDayTabs() {
         const wrap = document.querySelector('.sched-days');
         if (!wrap) return;
-        wrap.innerHTML = weekDates.length
-            ? weekDates.map((d, i) =>
+        // Нет данных — показываем вкладки из предыдущей удачной загрузки (в режиме "в разработке")
+        const dates = weekDates.length ? weekDates : referenceDates;
+        wrap.innerHTML = dates.length
+            ? dates.map((d, i) =>
                 `<button class="sched-day${i === 0 ? ' active' : ''}" data-day="${i}">${dayLabel(d)}</button>`
               ).join('')
-            : '<span style="color:var(--text-muted);font-size:.82rem">Меню на эту неделю не добавлено</span>';
+            : '';
         wrap.querySelectorAll('.sched-day').forEach((btn, i) => {
             btn.addEventListener('click', () => {
+                if (!weekDates.length) return; // заглушка — клики не переключают меню
                 wrap.querySelectorAll('.sched-day').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selDay = i;
@@ -411,7 +431,19 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
     function render() {
         if (!weekDates.length) {
             summary.innerHTML = '';
-            grid.innerHTML = '<p class="sched-empty">Меню на эту неделю ещё не добавлено</p>';
+            const prog = loadedSheet || 'этой программы';
+            grid.innerHTML = `
+                <div class="sched-wip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                        <line x1="8" y1="14" x2="8" y2="14" stroke-width="2"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2"/>
+                        <line x1="8" y1="18" x2="8" y2="18" stroke-width="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2"/>
+                    </svg>
+                    <p class="sched-wip-title">Меню в разработке</p>
+                    <p class="sched-wip-text">Нутрициолог составляет рацион для программы «${prog}».<br>Меню появится на следующей неделе. Пока выберите другую программу.</p>
+                </div>`;
             return;
         }
         const date  = weekDates[selDay];
