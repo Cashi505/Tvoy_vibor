@@ -327,7 +327,7 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         if (!val) return '';
         if (val.startsWith('http')) {
             const m = val.match(/\/file\/d\/([^/?]+)/);
-            if (m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+            if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`;
             return val;
         }
         return 'images/menu/' + val;

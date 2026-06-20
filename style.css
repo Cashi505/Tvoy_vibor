@@ -584,47 +584,19 @@ em { font-style: italic; }
 }
 
 /* ============================================
-   MENU + CALCULATOR MERGED LAYOUT
+   CALCULATOR
    ============================================ */
-.menu-top-grid {
-    display: grid;
-    grid-template-columns: minmax(280px, 400px) 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    align-items: start;
+.calculator {
+    background: var(--bg-section);
+    padding: clamp(5rem, 10vw, 9rem) 0;
 }
-.menu-calc-panel {
+.calc-form {
+    max-width: 760px;
+    margin: 0 auto;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     overflow: hidden;
-}
-.menu-panel-label {
-    padding: 1rem 1.5rem 0;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    display: block;
-}
-.menu-prog-panel {
-    display: flex;
-    flex-direction: column;
-}
-.menu-prog-panel .sched-programs {
-    flex-direction: column;
-    margin-bottom: 0;
-    gap: 0.4rem;
-}
-.menu-prog-panel .sched-prog {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0.9rem 1.3rem;
-    text-align: left;
-}
-.menu-prog-panel .menu-panel-label {
-    padding: 0 0 0.6rem 0;
 }
 
 /* Day label with date (two-line) */
@@ -1053,9 +1025,6 @@ em { font-style: italic; }
 @media (max-width: 900px) {
     .sched-grid { grid-template-columns: repeat(2, 1fr); }
     .sched-card-img { height: 148px; }
-    .menu-top-grid { grid-template-columns: 1fr; }
-    .menu-prog-panel .sched-programs { flex-direction: row; flex-wrap: wrap; }
-    .menu-prog-panel .sched-prog { flex-direction: column; align-items: center; padding: 0.65rem 1.1rem; }
 }
 @media (max-width: 640px) {
     .sched-programs { gap: 0.35rem; }
