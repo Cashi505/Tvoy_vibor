@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твой Выбор - Доставка правильного питания</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav-logo">
+                <img src="images/logo.png" alt="Твой Выбор" class="logo-img">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#programs" class="nav-link">Программы</a></li>
+                <li><a href="#how" class="nav-link">Как работаем</a></li>
+                <li><a href="#calculator" class="nav-link">Калькулятор</a></li>
+                <li><a href="#menu" class="nav-link">Меню</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contacts" class="nav-link">Контакты</a></li>
+            </ul>
+            <a href="#order" class="btn btn-nav">Заказать</a>
+            <button class="nav-burger" id="navBurger" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-video-wrap">
+            <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"
+                   poster="video-hero-poster.jpg">
+                <source src="video-hero.webm" type="video/webm">
+                <source src="video-hero.mp4"  type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content container">
+            <div class="hero-tag reveal-fade">Сургут · Нефтеюганск</div>
+            <h1 class="hero-title">
+                <span class="reveal-up">Еда,</span>
+                <em class="reveal-up delay-1">которая меняет тебя</em>
+            </h1>
+            <p class="hero-sub reveal-up delay-2">
+                Персональное питание под ваши цели.<br>
+                Доставка 3-4 раза в неделю. Более 200 блюд.
+            </p>
+            <div class="hero-actions reveal-up delay-3">
+                <a href="#programs" class="btn btn-primary">Выбрать программу</a>
+                <a href="#calculator" class="btn btn-ghost">Рассчитать калории</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-inner">
+            <span class="ticker-item">Доставка в Сургуте <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Доставка в Нефтеюганске <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Более 200 уникальных блюд <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">4 недели без повторов <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">100% натуральные продукты <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Бесплатная доставка <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Готово за 3 минуты <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Доставка в Сургуте <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Доставка в Нефтеюганске <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Более 200 уникальных блюд <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">4 недели без повторов <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">100% натуральные продукты <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Бесплатная доставка <span class="ticker-dot">◆</span></span>
+            <span class="ticker-item">Готово за 3 минуты <span class="ticker-dot">◆</span></span>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal-up">
+                    <div class="stat-num-row">
+                        <span class="stat-number" data-target="200">0</span>
+                        <span class="stat-plus">+</span>
+                    </div>
+                    <span class="stat-label">блюд в меню</span>
+                </div>
+                <div class="stat-item reveal-up delay-1">
+                    <div class="stat-num-row">
+                        <span class="stat-number" data-target="4">0</span>
+                    </div>
+                    <span class="stat-label">недели без повторов</span>
+                </div>
+                <div class="stat-item reveal-up delay-2">
+                    <div class="stat-num-row">
+                        <span class="stat-number" data-target="2">0</span>
+                        <span class="stat-unit">кг</span>
+                    </div>
+                    <span class="stat-label">в среднем за неделю</span>
+                </div>
+                <div class="stat-item reveal-up delay-3">
+                    <div class="stat-num-row">
+                        <span class="stat-number" data-target="100">0</span>
+                        <span class="stat-plus">%</span>
+                    </div>
+                    <span class="stat-label">натуральные продукты</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-left reveal-left">
+                    <h2 class="section-title">Мы готовим -<br><em>вы живёте</em></h2>
+                    <p class="about-text">
+                        Мы верим, что правильное питание не должно быть сложным. Наши повара каждый день готовят блюда из свежих натуральных продуктов. Вам остаётся только разогреть и насладиться.
+                    </p>
+                    <p class="about-text">
+                        Каждая программа составляется под ваши персональные показатели КБЖУ. Мы не верим в универсальные решения.
+                    </p>
+                </div>
+                <div class="about-right reveal-right">
+                    <div class="about-features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div>
+                                <h3>Готово за 3 минуты</h3>
+                                <p>Разогрейте - и обед готов. Никакой готовки.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <h3>Гибкая доставка</h3>
+                                <p>3-4 раза в неделю, в удобное время и адрес</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            </div>
+                            <div>
+                                <h3>Только натуральное</h3>
+                                <p>Без консервантов, красителей и усилителей вкуса</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
+                            <div>
+                                <h3>Бесплатная доставка</h3>
+                                <p>До вашей двери - без скрытых доплат</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section class="programs" id="programs">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <div class="section-eyebrow">Программы питания</div>
+                <h2 class="section-title">Выберите <em>свою программу</em></h2>
+                <p class="section-sub">Пять направлений - одно из них создано именно для вас</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card reveal-up delay-1">
+                    <div class="program-kcal">900<span>ккал / день</span></div>
+                    <h3 class="program-title">Похудение</h3>
+                    <p class="program-desc">Дефицит калорий, высокое содержание белка, минимум простых углеводов. Минус 2 кг в неделю.</p>
+                    <ul class="program-perks">
+                        <li>Расчёт по вашему КБЖУ</li>
+                        <li>Контроль порций</li>
+                        <li>Без чувства голода</li>
+                    </ul>
+                    <a href="#order" class="btn btn-outline">Подобрать</a>
+                </div>
+                <div class="program-card reveal-up delay-2">
+                    <div class="program-kcal">1 200<span>ккал / день</span></div>
+                    <h3 class="program-title">Поддержание</h3>
+                    <p class="program-desc">Сбалансированный рацион для тех, кто уже достиг нужного веса и хочет его удержать.</p>
+                    <ul class="program-perks">
+                        <li>Полный набор нутриентов</li>
+                        <li>4 недели разных блюд</li>
+                        <li>Лёгкость и энергия</li>
+                    </ul>
+                    <a href="#order" class="btn btn-outline">Подобрать</a>
+                </div>
+                <div class="program-card program-card--featured reveal-up delay-2">
+                    <div class="program-badge">Популярное</div>
+                    <div class="program-kcal">1 800<span>ккал / день</span></div>
+                    <h3 class="program-title">Сбалансированное</h3>
+                    <p class="program-desc">Идеальный баланс для активного образа жизни. Вкусно, сытно и полезно каждый день.</p>
+                    <ul class="program-perks">
+                        <li>Подходит большинству</li>
+                        <li>Разнообразное меню</li>
+                        <li>Для спортивного режима</li>
+                    </ul>
+                    <a href="#order" class="btn btn-primary">Подобрать</a>
+                </div>
+                <div class="program-card reveal-up delay-3">
+                    <div class="program-kcal">2 500<span>ккал / день</span></div>
+                    <h3 class="program-title">Набор массы</h3>
+                    <p class="program-desc">Профицит калорий с высоким содержанием белка для роста мышечной массы и силы.</p>
+                    <ul class="program-perks">
+                        <li>Для спортсменов</li>
+                        <li>Высокий процент белка</li>
+                        <li>Комплексные углеводы</li>
+                    </ul>
+                    <a href="#order" class="btn btn-outline">Подобрать</a>
+                </div>
+                <div class="program-card reveal-up delay-3">
+                    <div class="program-kcal">3 000<span>ккал / день</span></div>
+                    <h3 class="program-title">Как дома</h3>
+                    <p class="program-desc">Домашняя кухня в профессиональном исполнении. Привычные блюда из натуральных продуктов.</p>
+                    <ul class="program-perks">
+                        <li>Уютные блюда</li>
+                        <li>Без строгих ограничений</li>
+                        <li>Семейные рецепты</li>
+                    </ul>
+                    <a href="#order" class="btn btn-outline">Подобрать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <h2 class="section-title">Три шага до <em>вашего обеда</em></h2>
+                <p class="section-sub">Без лишних усилий с вашей стороны</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step reveal-up delay-1">
+                    <div class="step-num">01</div>
+                    <h3>Выберите программу</h3>
+                    <p>Воспользуйтесь калькулятором или проконсультируйтесь с нами, чтобы найти подходящий рацион под ваши цели.</p>
+                </div>
+                <div class="step-divider reveal-fade delay-1"></div>
+                <div class="step reveal-up delay-2">
+                    <div class="step-num">02</div>
+                    <h3>Мы готовим</h3>
+                    <p>Повара ежедневно готовят свежие блюда из натуральных продуктов по вашему индивидуальному КБЖУ.</p>
+                </div>
+                <div class="step-divider reveal-fade delay-2"></div>
+                <div class="step reveal-up delay-3">
+                    <div class="step-num">03</div>
+                    <h3>Получайте и ешьте</h3>
+                    <p>Доставка 3-4 раза в неделю прямо до вашей двери. Разогрейте за 3 минуты и наслаждайтесь.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <h2 class="section-title">Узнайте свою <em>норму калорий</em></h2>
+                <p class="section-sub">Введите данные о себе - мы подберём оптимальную программу питания</p>
+            </div>
+            <div class="calc-form reveal-up delay-1">
+                <div class="calc-form-inner">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Пол</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="male" checked>
+                                    <span class="radio-custom"></span>
+                                    Мужской
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="female">
+                                    <span class="radio-custom"></span>
+                                    Женский
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row form-row--3">
+                        <div class="form-group">
+                            <label for="age">Возраст</label>
+                            <input type="number" id="age" placeholder="30" min="15" max="80">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Рост, см</label>
+                            <input type="number" id="height" placeholder="175" min="140" max="220">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Вес, кг</label>
+                            <input type="number" id="weight" placeholder="70" min="40" max="200">
+                        </div>
+                    </div>
+                    <div class="form-row form-row--2">
+                        <div class="form-group">
+                            <label for="activity">Уровень активности</label>
+                            <select id="activity">
+                                <option value="1.2">Минимальный - сидячая работа</option>
+                                <option value="1.375" selected>Низкий - 1-3 тренировки в неделю</option>
+                                <option value="1.55">Средний - 3-5 тренировок</option>
+                                <option value="1.725">Высокий - 6-7 тренировок</option>
+                                <option value="1.9">Очень высокий - спортсмен</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal">Цель</label>
+                            <select id="goal">
+                                <option value="-20">Похудение</option>
+                                <option value="0" selected>Поддержание веса</option>
+                                <option value="15">Набор массы</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="calc-footer">
+                        <span class="calc-badge">Формула Миффлина-Сан Жеора</span>
+                        <button class="btn btn-primary" id="calcBtn">Рассчитать мою норму</button>
+                    </div>
+                </div>
+                <div class="calc-result" id="calcResult">
+                    <div class="result-kcal">
+                        <span id="resultNum">-</span>
+                        <span class="result-unit">ккал / день</span>
+                    </div>
+                    <p class="result-program" id="resultProgram"></p>
+                    <a href="#order" class="btn btn-primary" id="resultCta">Оформить программу</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <h2 class="section-title">Более 200 <em>уникальных блюд</em></h2>
+                <p class="section-sub">Меню обновляется каждые 4 недели - никаких повторений</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card reveal-up delay-1">
+                    <div class="menu-card-img">
+                        <img src="images/menu/tuna-salad.jpeg" alt="Тунец с овощами" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Салаты</span>
+                        <h4>Тунец с овощами</h4>
+                        <p>Тунец, микс зелени, черри, оливковое масло, лимон</p>
+                        <div class="menu-macros">
+                            <span>Б 24г</span>
+                            <span>Ж 8г</span>
+                            <span>У 12г</span>
+                            <span class="menu-kcal">320 ккал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card reveal-up delay-2">
+                    <div class="menu-card-img">
+                        <img src="images/menu/chicken-breast.jpeg" alt="Куриная грудка" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Основное</span>
+                        <h4>Куриная грудка</h4>
+                        <p>Запечённая грудка с пряными травами, гречка</p>
+                        <div class="menu-macros">
+                            <span>Б 38г</span>
+                            <span>Ж 6г</span>
+                            <span>У 32г</span>
+                            <span class="menu-kcal">420 ккал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card reveal-up delay-3">
+                    <div class="menu-card-img">
+                        <img src="images/menu/oatmeal-berries.jpeg" alt="Овсяная каша" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Завтрак</span>
+                        <h4>Овсяная каша</h4>
+                        <p>С ягодами, мёдом и семенами чиа</p>
+                        <div class="menu-macros">
+                            <span>Б 12г</span>
+                            <span>Ж 5г</span>
+                            <span>У 48г</span>
+                            <span class="menu-kcal">290 ккал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card reveal-up delay-1">
+                    <div class="menu-card-img">
+                        <img src="images/menu/beef-steak.jpeg" alt="Говяжий стейк" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Основное</span>
+                        <h4>Говяжий стейк</h4>
+                        <p>Нежирная говядина, запечённые сезонные овощи</p>
+                        <div class="menu-macros">
+                            <span>Б 42г</span>
+                            <span>Ж 14г</span>
+                            <span>У 8г</span>
+                            <span class="menu-kcal">480 ккал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card reveal-up delay-2">
+                    <div class="menu-card-img">
+                        <img src="images/menu/chicken-soup.jpeg" alt="Куриный суп" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Супы</span>
+                        <h4>Куриный суп</h4>
+                        <p>Бульон, нут, сельдерей, свежая зелень</p>
+                        <div class="menu-macros">
+                            <span>Б 18г</span>
+                            <span>Ж 4г</span>
+                            <span>У 22г</span>
+                            <span class="menu-kcal">200 ккал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card reveal-up delay-3">
+                    <div class="menu-card-img">
+                        <img src="images/menu/protein-box.jpeg" alt="Протеиновый бокс" loading="lazy">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-tag">Снеки</span>
+                        <h4>Протеиновый бокс</h4>
+                        <p>Яйца, сыр, огурцы, творог, орехи</p>
+                        <div class="menu-macros">
+                            <span>Б 28г</span>
+                            <span>Ж 12г</span>
+                            <span>У 6г</span>
+                            <span class="menu-kcal">240 ккал</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <h2 class="section-title">Частые <em>вопросы</em></h2>
+                <p class="section-sub">Отвечаем на то, что спрашивают чаще всего</p>
+            </div>
+            <div class="faq-list">
+
+                <div class="faq-item reveal-up delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Как оформить заказ?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Оставьте заявку на сайте или позвоните нам — мы согласуем первую доставку на следующий день. Доставка происходит вечером, с 18:00 до 23:00.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal-up delay-2">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Не надоест ли одно и то же?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Блюда не повторяются. Каждый день — что-то новое из любимых ингредиентов: мясо, крупы, овощи, фрукты, молочные продукты, специи. Готовим и правильные десерты. В нашей коллекции более 200 блюд.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal-up delay-3">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Можно ли перенести или отменить доставку?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Да. Предупредите нас заранее или в день доставки до 12:00 по Сургуту (до 11:00 по Нефтеюганску) — перенесём без проблем.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal-up delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Реально ли похудеть на вашем питании?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Да. Питаясь только нашими блюдами, можно добиться отличных результатов. В среднем в первую неделю уходит около двух килограммов — результат зависит от исходных параметров и индивидуального обмена веществ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal-up delay-2">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Как часто меняется меню?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Меню не повторяется четыре полные недели. Затем повторения становятся случайными, а новые блюда периодически добавляются в коллекцию.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal-up delay-3">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Можно ли изменить время и адрес доставки?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Свяжитесь с менеджером до 17:00 в день доставки — скорректируем время и адрес.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <h2 class="section-title">Свяжитесь <em>с нами</em></h2>
+                <p class="section-sub">Ответим на вопросы и поможем подобрать программу</p>
+            </div>
+            <div class="contacts-grid">
+
+                <div class="contacts-info">
+                    <a class="contact-item reveal-left delay-1" href="https://yandex.ru/maps/" target="_blank" rel="noopener">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s-8-5.5-8-11a8 8 0 1 1 16 0c0 5.5-8 11-8 11z"/>
+                                <circle cx="12" cy="11" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="contact-body">
+                            <span class="contact-label">Адрес</span>
+                            <span class="contact-value">Сургут, ул. Энергетиков, 28<br>Нефтеюганск, мкр. 16, 2</span>
+                        </div>
+                    </a>
+
+                    <a class="contact-item contact-item--phone reveal-left delay-2" href="tel:+79000000000">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-body">
+                            <span class="contact-label">Телефон</span>
+                            <span class="contact-value phone-number">+7 (900) 000-00-00</span>
+                        </div>
+                    </a>
+
+                    <a class="contact-item reveal-left delay-3" href="mailto:info@vibiraiedu.ru">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <polyline points="2,4 12,13 22,4"/>
+                            </svg>
+                        </div>
+                        <div class="contact-body">
+                            <span class="contact-label">Почта</span>
+                            <span class="contact-value">info@vibiraiedu.ru</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="contacts-messengers reveal-right delay-2">
+                    <div class="messengers-header">
+                        <p class="messengers-title">Напишите нам</p>
+                        <p class="messengers-sub">Отвечаем быстро</p>
+                    </div>
+                    <div class="messenger-btns">
+                        <a href="#" class="messenger-btn" target="_blank" rel="noopener">
+                            <div class="messenger-icon-wrap">
+                                <img src="massagers/max.png" alt="Мессенджер Max" width="56" height="56">
+                            </div>
+                            <span>Max</span>
+                        </a>
+                        <div class="messenger-divider"></div>
+                        <a href="https://t.me/vibiraiedu" class="messenger-btn" target="_blank" rel="noopener">
+                            <div class="messenger-icon-wrap">
+                                <img src="massagers/telegram.png" alt="Telegram" width="56" height="56">
+                            </div>
+                            <span>Telegram</span>
+                        </a>
+                    </div>
+                    <p class="messengers-note">Режим работы: Пн-Пт 9:00 — 20:00</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="order">
+        <div class="cta-bg">
+            <video autoplay muted loop playsinline preload="auto"
+                   poster="video-hero-poster.jpg">
+                <source src="video-hero.webm" type="video/webm">
+                <source src="video-hero.mp4"  type="video/mp4">
+            </video>
+            <div class="cta-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content reveal-up">
+                <div class="section-eyebrow light">Начните сегодня</div>
+                <h2 class="cta-title">Первый шаг -<br><em>один звонок</em></h2>
+                <p class="cta-sub">Оставьте заявку, и наш нутрициолог свяжется с вами, чтобы подобрать идеальную программу</p>
+                <form class="order-form" id="orderForm" onsubmit="return handleOrder(event)">
+                    <input type="text" placeholder="Ваше имя" class="order-input" id="orderName" required>
+                    <input type="tel" placeholder="+7 (___) ___-__-__" class="order-input" id="orderPhone" required>
+                    <button type="submit" class="btn btn-primary btn-large">Получить консультацию</button>
+                </form>
+                <p class="cta-note">Бесплатно, без обязательств. Сургут и Нефтеюганск.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo" style="margin-bottom: 1rem; display: inline-flex;">
+                        <img src="images/logo.png" alt="Твой Выбор" class="logo-img logo-img--footer">
+                    </a>
+                    <p>Доставка правильного питания в Сургуте и Нефтеюганске. Готовим каждый день из натуральных продуктов.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Программы</h4>
+                    <ul>
+                        <li><a href="#programs">Похудение</a></li>
+                        <li><a href="#programs">Поддержание</a></li>
+                        <li><a href="#programs">Сбалансированное</a></li>
+                        <li><a href="#programs">Набор массы</a></li>
+                        <li><a href="#programs">Как дома</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#how">Как работаем</a></li>
+                        <li><a href="#menu">Меню</a></li>
+                        <li><a href="#calculator">Калькулятор</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p>Сургут и Нефтеюганск</p>
+                    <p><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
+                    <p><a href="mailto:info@vibiraiedu.ru">info@vibiraiedu.ru</a></p>
+                    <p><a href="https://vibiraiedu.ru" target="_blank" rel="noopener">vibiraiedu.ru</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Твой Выбор. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
