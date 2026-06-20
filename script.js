@@ -378,9 +378,7 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         const res  = await fetch(csvUrl(name));
         const rows = parseCSV(await res.text());
         // Колонки: Дата | Приём | Блюдо
-        const allDates = rows.filter(r => r[0]).map(r => r[0]);
-        const mon = targetMonday(allDates);
-        weekRows = rows.filter(r => r[0] && inWeek(r[0], mon));
+        weekRows = rows.filter(r => r[0]);
         const seen = new Set();
         weekDates = [];
         weekRows.forEach(r => { if (!seen.has(r[0])) { seen.add(r[0]); weekDates.push(r[0]); } });
