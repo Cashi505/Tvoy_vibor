@@ -273,20 +273,194 @@ const messengerBtns = document.querySelector('.messenger-btns');
 if (messengerBtns) messengerObserver.observe(messengerBtns);
 
 /* ============================================
-   MENU CARD — 3D TILT ON HOVER
+   WEEKLY SCHEDULE — Google Sheets
    ============================================ */
-document.querySelectorAll('.menu-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width  - 0.5;
-        const y = (e.clientY - rect.top)  / rect.height - 0.5;
-        card.style.transform =
-            `translateY(-6px) rotateX(${-y * 7}deg) rotateY(${x * 7}deg)`;
+(function () {
+    const SHEET_ID = '1Dm-yrY05e0xsUVC7V7GkkzGISfdthOfoOFtQJCWqr8o';
+    const csvUrl = (sheet) =>
+        `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`;
+
+    const grid    = document.getElementById('schedGrid');
+    const summary = document.getElementById('schedSummary');
+    if (!grid) return;
+
+    let dishLib     = {};  // { "Название" → { img, w, p, f, c, e } }
+    let weekRows    = [];  // строки текущей недели из вкладки программы
+    let weekDates   = [];  // уникальные даты текущей недели по порядку
+    let selDay      = 0;
+    let loadedSheet = '';
+
+    /* --- CSV-парсер (поддерживает кавычки) --- */
+    function parseCSV(text) {
+        const rows = [];
+        const lines = text.trim().split('\n');
+        for (let i = 1; i < lines.length; i++) {
+            const cols = [];
+            let cur = '', inQ = false;
+            for (const ch of lines[i]) {
+                if (ch === '"') { inQ = !inQ; }
+                else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+                else cur += ch;
+            }
+            cols.push(cur.trim());
+            if (cols[0]) rows.push(cols);
+        }
+        return rows;
+    }
+
+    /* --- Дата "ДД.ММ.ГГГГ" → Date --- */
+    function toDate(s) {
+        const [d, m, y] = s.split('.').map(Number);
+        return new Date(y, m - 1, d);
+    }
+
+    /* --- Понедельник текущей недели --- */
+    function monday() {
+        const t = new Date();
+        t.setDate(t.getDate() + (t.getDay() === 0 ? -6 : 1 - t.getDay()));
+        t.setHours(0, 0, 0, 0);
+        return t;
+    }
+
+    function inCurrentWeek(s) {
+        const dt  = toDate(s);
+        const mon = monday();
+        const sat = new Date(mon);
+        sat.setDate(mon.getDate() + 5);
+        sat.setHours(23, 59, 59, 999);
+        return dt >= mon && dt <= sat;
+    }
+
+    function dayLabel(s) {
+        return ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'][toDate(s).getDay()];
+    }
+
+    /* --- Загрузка Справочника --- */
+    async function loadDishes() {
+        const res  = await fetch(csvUrl('Справочник'));
+        const rows = parseCSV(await res.text());
+        dishLib = {};
+        // Колонки: Название | Фото | Вес | Белки | Жиры | Углеводы | Ккал
+        rows.forEach(([name, photo, w, p, f, c, e]) => {
+            if (name) dishLib[name] = { img: 'images/menu/' + photo, w: +w, p: +p, f: +f, c: +c, e: +e };
+        });
+    }
+
+    /* --- Загрузка вкладки программы --- */
+    async function loadSheet(name) {
+        if (name === loadedSheet) { render(); return; }
+        const res  = await fetch(csvUrl(name));
+        const rows = parseCSV(await res.text());
+        // Колонки: Дата | Приём | Блюдо
+        weekRows = rows.filter(r => r[0] && inCurrentWeek(r[0]));
+        const seen = new Set();
+        weekDates = [];
+        weekRows.forEach(r => { if (!seen.has(r[0])) { seen.add(r[0]); weekDates.push(r[0]); } });
+        loadedSheet = name;
+        selDay = 0;
+        rebuildDayTabs();
+        render();
+    }
+
+    /* --- Перестраиваем вкладки дней --- */
+    function rebuildDayTabs() {
+        const wrap = document.querySelector('.sched-days');
+        if (!wrap) return;
+        wrap.innerHTML = weekDates.length
+            ? weekDates.map((d, i) =>
+                `<button class="sched-day${i === 0 ? ' active' : ''}" data-day="${i}">${dayLabel(d)}</button>`
+              ).join('')
+            : '<span style="color:var(--text-muted);font-size:.82rem">Меню на эту неделю не добавлено</span>';
+        wrap.querySelectorAll('.sched-day').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                wrap.querySelectorAll('.sched-day').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selDay = i;
+                render();
+            });
+        });
+    }
+
+    /* --- Рендер текущего дня --- */
+    function render() {
+        if (!weekDates.length) {
+            summary.innerHTML = '';
+            grid.innerHTML = '<p class="sched-empty">Меню на эту неделю ещё не добавлено</p>';
+            return;
+        }
+        const date  = weekDates[selDay];
+        const meals = weekRows.filter(r => r[0] === date);
+        const tot   = meals.reduce((t, r) => {
+            const d = dishLib[r[2]];
+            return d ? { p: t.p + d.p, f: t.f + d.f, c: t.c + d.c, e: t.e + d.e } : t;
+        }, { p: 0, f: 0, c: 0, e: 0 });
+
+        summary.innerHTML = `
+            <div class="sched-sum-item sched-sum-kcal"><b>${tot.e}</b><span>ккал</span></div>
+            <div class="sched-sum-item"><b>${tot.p}<small> г</small></b><span>Белки</span></div>
+            <div class="sched-sum-item"><b>${tot.f}<small> г</small></b><span>Жиры</span></div>
+            <div class="sched-sum-item"><b>${tot.c}<small> г</small></b><span>Углеводы</span></div>`;
+
+        grid.innerHTML = meals.map(([, type, name]) => {
+            const d = dishLib[name];
+            if (!d) return `
+                <div class="sched-card">
+                    <div class="sched-card-body">
+                        <h4 class="sched-card-name">${name}</h4>
+                        <div class="sched-card-weight" style="color:var(--gold)">Добавьте блюдо в Справочник</div>
+                    </div>
+                </div>`;
+            return `
+                <div class="sched-card">
+                    <div class="sched-card-type">${type}</div>
+                    <div class="sched-card-img"><img src="${d.img}" alt="${name}" loading="lazy"></div>
+                    <div class="sched-card-body">
+                        <h4 class="sched-card-name">${name}</h4>
+                        <div class="sched-card-weight">${d.w} г</div>
+                        <div class="sched-macros">
+                            <div class="sched-macro"><b>${d.p}</b><span>Белки</span></div>
+                            <div class="sched-macro"><b>${d.f}</b><span>Жиры</span></div>
+                            <div class="sched-macro"><b>${d.c}</b><span>Углев</span></div>
+                            <div class="sched-macro sched-macro--kcal"><b>${d.e}</b><span>ккал</span></div>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    /* --- Состояние загрузки --- */
+    function showLoading() {
+        summary.innerHTML = '';
+        grid.innerHTML = '<p class="sched-empty">Загрузка меню…</p>';
+    }
+
+    /* --- Кнопки программ --- */
+    document.querySelectorAll('.sched-prog').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            document.querySelectorAll('.sched-prog').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadedSheet = '';
+            showLoading();
+            try {
+                await loadSheet(btn.querySelector('.sched-prog-name').textContent.trim());
+            } catch {
+                grid.innerHTML = '<p class="sched-empty">Не удалось загрузить меню</p>';
+            }
+        });
     });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-});
+
+    /* --- Инициализация --- */
+    (async () => {
+        showLoading();
+        try {
+            await loadDishes();
+            const first = document.querySelector('.sched-prog.active .sched-prog-name');
+            await loadSheet(first ? first.textContent.trim() : 'Похудение');
+        } catch {
+            grid.innerHTML = '<p class="sched-empty">Не удалось загрузить меню. Проверьте доступ к таблице.</p>';
+        }
+    })();
+})();
 
 /* ============================================
    PRIMARY BUTTONS — MAGNETIC HOVER
