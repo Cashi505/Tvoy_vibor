@@ -90,7 +90,7 @@ em { font-style: italic; }
 }
 .section-header {
     text-align: center;
-    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: clamp(1.8rem, 3.5vw, 3rem);
 }
 .section-header .section-sub { margin: 0 auto; }
 
@@ -122,15 +122,15 @@ em { font-style: italic; }
     background: var(--green-light);
     border-color: var(--green-light);
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(90,158,111,0.38);
+    box-shadow: 0 8px 28px rgba(200,160,80,0.32);
 }
 .btn-primary:active { transform: translateY(0) scale(0.98); }
 .btn-ghost {
     color: var(--text-primary);
-    border-color: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.20);
 }
 .btn-ghost:hover {
-    border-color: rgba(255,255,255,0.6);
+    border-color: rgba(255,255,255,0.50);
     transform: translateY(-2px);
 }
 .btn-outline {
@@ -161,9 +161,12 @@ em { font-style: italic; }
     z-index: 100;
     padding: 1.2rem 0;
     transition: background 0.45s, padding 0.45s, border-color 0.45s;
+    background: rgba(10,18,9,0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 .header.scrolled {
-    background: rgba(10,18,9,0.9);
+    background: rgba(10,18,9,0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 0.75rem 0;
@@ -265,8 +268,8 @@ em { font-style: italic; }
     position: relative;
     z-index: 2;
     max-width: 900px;
-    padding-top: 9rem;
-    padding-bottom: 7rem;
+    padding-top: 7rem;
+    padding-bottom: 5rem;
 }
 .hero-tag {
     font-size: 0.72rem;
@@ -311,7 +314,7 @@ em { font-style: italic; }
    ============================================ */
 .stats {
     background: var(--bg-section);
-    padding: clamp(3rem, 6vw, 5rem) 0;
+    padding: clamp(2rem, 4vw, 3.5rem) 0;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 }
@@ -358,7 +361,7 @@ em { font-style: italic; }
    ABOUT
    ============================================ */
 .about {
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 .about-grid {
     display: grid;
@@ -416,7 +419,7 @@ em { font-style: italic; }
    ============================================ */
 .programs {
     background: var(--bg-section);
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 .programs-grid {
     display: grid;
@@ -455,7 +458,7 @@ em { font-style: italic; }
     transform: scaleX(1);
 }
 .program-card--featured {
-    background: linear-gradient(160deg, #1a2e20 0%, #0f2018 100%);
+    background: linear-gradient(160deg, rgba(200,160,80,0.14) 0%, rgba(200,160,80,0.06) 100%);
     border-color: var(--border-gold);
 }
 .program-badge {
@@ -529,7 +532,7 @@ em { font-style: italic; }
    HOW IT WORKS
    ============================================ */
 .how {
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 .steps-grid {
     display: grid;
@@ -552,7 +555,7 @@ em { font-style: italic; }
     font-family: var(--font-display);
     font-size: 3.8rem;
     font-weight: 700;
-    color: rgba(200,160,80,0.28);
+    color: rgba(200,160,80,0.22);
     line-height: 1;
     margin-bottom: 1rem;
     transition: color 0.5s;
@@ -588,7 +591,7 @@ em { font-style: italic; }
    ============================================ */
 .calculator {
     background: var(--bg-section);
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 .calc-form {
     max-width: 760px;
@@ -687,7 +690,7 @@ em { font-style: italic; }
 .form-group input,
 .form-group select {
     background: var(--bg-section);
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.12);
     border-radius: 8px;
     padding: 0.78rem 1rem;
     color: var(--text-primary);
@@ -701,7 +704,7 @@ em { font-style: italic; }
 .form-group select:focus {
     outline: none;
     border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(90,158,111,0.14);
+    box-shadow: 0 0 0 3px rgba(200,160,80,0.14);
 }
 .form-group input::placeholder { color: var(--text-muted); }
 .radio-group {
@@ -741,7 +744,7 @@ em { font-style: italic; }
     display: none;
     text-align: center;
     padding: 2rem;
-    background: linear-gradient(135deg, var(--bg-section) 0%, #0f2015 100%);
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-section) 100%);
     border-top: 1px solid var(--border-gold);
     animation: fadeInUp 0.5s var(--ease) forwards;
 }
@@ -775,7 +778,7 @@ em { font-style: italic; }
    WEEKLY SCHEDULE (MENU SECTION)
    ============================================ */
 .sched-section {
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
     background: var(--bg-dark);
 }
 
@@ -923,7 +926,7 @@ em { font-style: italic; }
 .sched-card:hover {
     border-color: var(--border-gold);
     transform: translateY(-4px);
-    box-shadow: 0 18px 48px rgba(0,0,0,0.3);
+    box-shadow: 0 18px 48px rgba(200,160,80,0.10), 0 4px 12px rgba(0,0,0,0.08);
 }
 .sched-card-type {
     padding: 0.52rem 1rem;
@@ -1113,7 +1116,7 @@ em { font-style: italic; }
    ============================================ */
 .cta-section {
     position: relative;
-    padding: clamp(6rem, 12vw, 10rem) 0;
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
     overflow: hidden;
 }
 .cta-bg {
@@ -1178,7 +1181,7 @@ em { font-style: italic; }
 .order-input:focus {
     outline: none;
     border-color: var(--green);
-    background: rgba(90,158,111,0.1);
+    background: rgba(200,160,80,0.1);
 }
 .order-input::placeholder { color: rgba(240,235,224,0.45); }
 .cta-note {
@@ -1193,7 +1196,7 @@ em { font-style: italic; }
 .footer {
     background: var(--bg-section);
     border-top: 1px solid var(--border);
-    padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+    padding: clamp(2rem, 4vw, 3.5rem) 0 2rem;
 }
 .footer-grid {
     display: grid;
@@ -1329,7 +1332,12 @@ em { font-style: italic; }
     .logo-img { height: 40px; }
 
     /* Hero */
-    .hero-content { max-width: 100%; padding-top: 7rem; padding-bottom: 5rem; }
+    .hero-content { max-width: 100%; padding-top: 5.5rem; padding-bottom: 3.5rem; }
+    .hero-overlay {
+        background:
+            rgba(10,18,9,0.88),
+            linear-gradient(to bottom, rgba(10,18,9,0.15) 0%, transparent 20%, transparent 65%, rgba(10,18,9,0.95) 100%);
+    }
 
     /* Grids */
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1468,18 +1476,18 @@ body::after {
 
 /* Program cards — enhanced hover glow */
 .program-card:hover {
-    box-shadow: 0 24px 64px rgba(200,160,80,0.10), 0 6px 20px rgba(0,0,0,0.45);
+    box-shadow: 0 24px 64px rgba(200,160,80,0.12), 0 6px 20px rgba(0,0,0,0.10);
 }
 .program-card--featured {
-    box-shadow: 0 8px 40px rgba(200,160,80,0.09);
+    box-shadow: 0 8px 40px rgba(200,160,80,0.12);
 }
 .program-card--featured:hover {
-    box-shadow: 0 28px 72px rgba(200,160,80,0.16), 0 8px 24px rgba(0,0,0,0.5);
+    box-shadow: 0 28px 72px rgba(200,160,80,0.18), 0 8px 24px rgba(0,0,0,0.12);
 }
 
 /* Steps — glow on hover */
 .step:hover {
-    box-shadow: 0 16px 48px rgba(200,160,80,0.07);
+    box-shadow: 0 16px 48px rgba(200,160,80,0.10);
 }
 
 /* Menu slider — perspective for tilt depth */
@@ -1497,13 +1505,13 @@ body::after {
     top: 50%; left: 50%;
     width: min(700px, 100vw);
     height: min(280px, 40vw);
-    background: radial-gradient(ellipse at center, rgba(200,160,80,0.05) 0%, transparent 68%);
+    background: radial-gradient(ellipse at center, rgba(200,160,80,0.07) 0%, transparent 68%);
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: -1;
 }
 
-/* Stat number — gold pulse on finish */
+/* Stat number — green pulse on finish */
 @keyframes stat-glow {
     0%   { text-shadow: 0 0 30px rgba(200,160,80,0.55); }
     100% { text-shadow: 0 0 0   rgba(200,160,80,0); }
@@ -1520,7 +1528,7 @@ body::after {
 
 /* Gold underline on nav on scroll (header.scrolled) */
 .header.scrolled .nav-logo .logo-mark {
-    box-shadow: 0 0 16px rgba(90,158,111,0.35);
+    box-shadow: 0 0 16px rgba(200,160,80,0.35);
 }
 
 /* About section — decorative vertical line */
@@ -1545,7 +1553,7 @@ body::after {
    ============================================ */
 .faq {
     background: var(--bg-dark);
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 
 .faq-list {
@@ -1642,7 +1650,7 @@ body::after {
    ============================================ */
 .contacts {
     background: var(--bg-section);
-    padding: clamp(5rem, 10vw, 9rem) 0;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
     border-top: 1px solid var(--border);
 }
 
@@ -1689,9 +1697,9 @@ body::after {
 
 /* Phone — subtle pulse ring */
 @keyframes phone-ring {
-    0%   { box-shadow: 0 0 0 0   rgba(90,158,111,0.5); }
-    70%  { box-shadow: 0 0 0 10px rgba(90,158,111,0); }
-    100% { box-shadow: 0 0 0 0   rgba(90,158,111,0); }
+    0%   { box-shadow: 0 0 0 0   rgba(200,160,80,0.5); }
+    70%  { box-shadow: 0 0 0 10px rgba(200,160,80,0); }
+    100% { box-shadow: 0 0 0 0   rgba(200,160,80,0); }
 }
 .contact-item--phone .contact-icon {
     animation: phone-ring 2.4s ease-out infinite;
@@ -1745,7 +1753,7 @@ body::after {
 
 /* Messengers card */
 .contacts-messengers {
-    background: linear-gradient(155deg, #162418 0%, #0f2015 100%);
+    background: linear-gradient(155deg, rgba(200,160,80,0.10) 0%, rgba(200,160,80,0.06) 100%);
     border: 1px solid var(--border-gold);
     border-radius: var(--radius-lg);
     padding: clamp(2rem, 5vw, 3rem);
@@ -1820,7 +1828,7 @@ body::after {
 .messenger-btn:hover .messenger-icon-wrap {
     border-color: var(--border-gold);
     background: var(--gold-dim);
-    box-shadow: 0 12px 40px rgba(200,160,80,0.18);
+    box-shadow: 0 12px 40px rgba(200,160,80,0.20);
     transform: scale(1.08);
 }
 .messenger-icon-wrap img {
@@ -1866,3 +1874,4 @@ body::after {
     .messenger-btns { gap: 1.5rem; }
     .messenger-icon-wrap { width: 60px; height: 60px; border-radius: 16px; }
 }
+
