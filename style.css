@@ -1021,8 +1021,10 @@ em { font-style: italic; }
     line-height: 1.6;
 }
 
-/* Carousel nav: hidden on desktop, shown on mobile via media query */
-.sched-carousel-nav { display: none; }
+/* Carousel: hidden on desktop */
+.sched-carousel-wrap { position: relative; }
+.sched-carousel-btn  { display: none; }
+.sched-carousel-nav  { display: none; }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -1047,7 +1049,7 @@ em { font-style: italic; }
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         gap: 0;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0;
     }
     .sched-grid::-webkit-scrollbar { display: none; }
     .sched-card {
@@ -1058,44 +1060,50 @@ em { font-style: italic; }
     .sched-card-img { height: 190px; }
     .sched-wip { flex: 0 0 100%; }
 
-    /* Show carousel arrows + counter */
-    .sched-carousel-nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.25rem;
-        margin-bottom: 2rem;
-    }
+    /* Arrows overlaid on the photo area */
     .sched-carousel-btn {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        border: 1px solid var(--border-gold);
-        background: var(--bg-card);
-        color: var(--gold);
-        cursor: pointer;
         display: flex;
+        position: absolute;
+        /* type strip ≈28px + half photo height 95px → centre of image */
+        top: 123px;
+        transform: translateY(-50%);
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(10,18,9,0.52);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        color: #fff;
+        cursor: pointer;
         align-items: center;
         justify-content: center;
-        transition: background 0.22s, color 0.22s;
-        flex-shrink: 0;
+        transition: background 0.2s, border-color 0.2s;
         -webkit-tap-highlight-color: transparent;
     }
+    #schedPrev { left: 0.65rem; }
+    #schedNext { right: 0.65rem; }
     .sched-carousel-btn:active:not(:disabled) {
-        background: var(--gold);
-        color: var(--bg-dark);
+        background: rgba(200,160,80,0.82);
+        border-color: var(--gold);
     }
     .sched-carousel-btn:disabled {
-        opacity: 0.28;
+        opacity: 0.18;
         pointer-events: none;
+    }
+
+    /* Counter label below the grid */
+    .sched-carousel-nav {
+        display: flex;
+        justify-content: center;
+        padding: 0.6rem 0 1.8rem;
     }
     .sched-carousel-counter {
         font-family: var(--font-body);
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 500;
         color: var(--text-secondary);
-        min-width: 5.5rem;
-        text-align: center;
         letter-spacing: 0.01em;
     }
 }
