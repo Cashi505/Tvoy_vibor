@@ -444,6 +444,7 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
                     <p class="sched-wip-title">Меню в разработке</p>
                     <p class="sched-wip-text">Нутрициолог составляет рацион для программы «${prog}».<br>Меню появится на следующей неделе. Пока выберите другую программу.</p>
                 </div>`;
+            syncCarousel();
             return;
         }
         const date  = weekDates[selDay];
@@ -484,6 +485,7 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
                     </div>
                 </div>`;
         }).join('');
+        syncCarousel();
     }
 
     /* --- Состояние загрузки --- */
@@ -491,6 +493,53 @@ if (messengerBtns) messengerObserver.observe(messengerBtns);
         summary.innerHTML = '';
         grid.innerHTML = '<p class="sched-empty">Загрузка меню…</p>';
     }
+
+    /* --- Карусель (мобильный): сброс позиции и счётчика после render() --- */
+    function syncCarousel() {
+        const nav     = document.getElementById('schedCarouselNav');
+        const counter = document.getElementById('schedCounter');
+        const prev    = document.getElementById('schedPrev');
+        const next    = document.getElementById('schedNext');
+        if (!nav || !counter || !prev || !next) return;
+
+        const cards = grid.querySelectorAll('.sched-card');
+        const total = cards.length;
+
+        // instant scroll reset (no smooth here — content just changed)
+        grid.scrollTo({ left: 0, behavior: 'instant' });
+        nav.style.visibility = total ? '' : 'hidden';
+        if (!total) return;
+
+        const firstType = cards[0].querySelector('.sched-card-type')?.textContent?.trim() || '';
+        counter.textContent = firstType ? `${firstType} · 1 / ${total}` : `1 / ${total}`;
+        prev.disabled = true;
+        next.disabled = total <= 1;
+    }
+
+    /* --- Карусель: стрелки и счётчик (инициализируется один раз) --- */
+    (function initCarousel() {
+        const prev    = document.getElementById('schedPrev');
+        const next    = document.getElementById('schedNext');
+        const counter = document.getElementById('schedCounter');
+        if (!prev || !next) return;
+
+        prev.addEventListener('click', () => {
+            grid.scrollBy({ left: -grid.clientWidth, behavior: 'smooth' });
+        });
+        next.addEventListener('click', () => {
+            grid.scrollBy({ left: grid.clientWidth, behavior: 'smooth' });
+        });
+
+        grid.addEventListener('scroll', () => {
+            const cards = grid.querySelectorAll('.sched-card');
+            if (!cards.length || !counter) return;
+            const idx   = Math.round(grid.scrollLeft / grid.clientWidth);
+            const type  = cards[idx]?.querySelector('.sched-card-type')?.textContent?.trim() || '';
+            counter.textContent = type ? `${type} · ${idx + 1} / ${cards.length}` : `${idx + 1} / ${cards.length}`;
+            prev.disabled = idx === 0;
+            next.disabled = idx >= cards.length - 1;
+        }, { passive: true });
+    })();
 
     /* --- Кнопки программ --- */
     document.querySelectorAll('.sched-prog').forEach(btn => {

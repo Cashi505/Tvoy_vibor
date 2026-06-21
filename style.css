@@ -1021,6 +1021,9 @@ em { font-style: italic; }
     line-height: 1.6;
 }
 
+/* Carousel nav: hidden on desktop, shown on mobile via media query */
+.sched-carousel-nav { display: none; }
+
 /* Responsive */
 @media (max-width: 900px) {
     .sched-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1030,16 +1033,71 @@ em { font-style: italic; }
     .sched-programs { gap: 0.35rem; }
     .sched-prog { padding: 0.5rem 0.85rem; }
     .sched-prog-name { font-size: 0.78rem; }
-    .sched-grid { grid-template-columns: 1fr 1fr; gap: 0.65rem; }
-    .sched-card-img { height: 120px; }
     .sched-day { min-width: 52px; padding: 0.42rem 0.5rem; }
     .day-name { font-size: 0.73rem; }
     .day-date { font-size: 0.56rem; }
     .sched-sum-item b { font-size: 1.15rem; }
-}
-@media (max-width: 420px) {
-    .sched-grid { grid-template-columns: 1fr; }
-    .sched-card-img { height: 200px; }
+
+    /* Meal carousel (single-card swipe) */
+    .sched-grid {
+        grid-template-columns: unset;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+        margin-bottom: 0.75rem;
+    }
+    .sched-grid::-webkit-scrollbar { display: none; }
+    .sched-card {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        min-width: 0;
+    }
+    .sched-card-img { height: 190px; }
+    .sched-wip { flex: 0 0 100%; }
+
+    /* Show carousel arrows + counter */
+    .sched-carousel-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+    .sched-carousel-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 1px solid var(--border-gold);
+        background: var(--bg-card);
+        color: var(--gold);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.22s, color 0.22s;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .sched-carousel-btn:active:not(:disabled) {
+        background: var(--gold);
+        color: var(--bg-dark);
+    }
+    .sched-carousel-btn:disabled {
+        opacity: 0.28;
+        pointer-events: none;
+    }
+    .sched-carousel-counter {
+        font-family: var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        min-width: 5.5rem;
+        text-align: center;
+        letter-spacing: 0.01em;
+    }
 }
 
 /* ============================================
