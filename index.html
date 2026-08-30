@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Твой Выбор — доставка здорового питания в Сургуте и Нефтеюганске</title>
+<meta name="description" content="Готовое питание под вашу цель: похудение, баланс, набор массы. Доставляем готовые блюда 3–4 раза в неделю в Сургуте и Нефтеюганске.">
+<link rel="icon" href="assets/img/logo.webp">
+<!-- меню на неделю тянется из Google Таблицы, фото блюд — с Google Drive:
+     соединение поднимаем заранее, чтобы не ждать рукопожатие при первом запросе -->
+<link rel="preconnect" href="https://docs.google.com" crossorigin>
+<link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+<link rel="dns-prefetch" href="https://docs.google.com">
+<link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="hdr" id="hdr">
+  <div class="hdr__in container">
+    <a class="hdr__logo" href="#hero" aria-label="Твой Выбор — на главную">
+      <img src="assets/img/logo.webp" alt="Твой Выбор" width="131" height="62">
+    </a>
+
+    <nav class="hdr__nav" id="nav" aria-label="Основная навигация">
+      <a href="#programs">Программа</a>
+      <a href="#menu">Меню</a>
+      <a href="#calculator">Калькулятор</a>
+      <a href="#results">Отзывы</a>
+      <a href="#faq">Вопросы и ответы</a>
+    </nav>
+
+    <div class="hdr__side">
+      <div class="city" id="city">
+        <button class="city__btn" type="button" aria-expanded="false" aria-haspopup="listbox">
+          <span class="city__name" id="cityName">Сургут</span>
+          <img class="city__chev" src="assets/icons/arrow-green.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <ul class="city__list" role="listbox" hidden>
+          <li><button type="button" role="option" aria-selected="true" data-city="Сургут">Сургут</button></li>
+          <li><button type="button" role="option" aria-selected="false" data-city="Нефтеюганск">Нефтеюганск</button></li>
+        </ul>
+      </div>
+
+      <a class="btn btn--primary hdr__cta" href="#menu">
+        Подобрать рацион
+        <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+      </a>
+
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero__in container">
+    <div class="hero__col">
+      <p class="hero__since">Работаем для вас с 2017 года</p>
+      <h1 class="hero__title">Готовое питание<br>под <em>вашу цель</em></h1>
+
+      <p class="hero__marks">
+        <span>Без готовки</span>
+        <i class="dot" aria-hidden="true"></i>
+        <span>Без подсчета калорий</span>
+      </p>
+
+      <p class="hero__lead">Подберём рацион для похудения, баланса или набора массы. Доставляем готовые блюда 3–4 раза в неделю — вам остаётся только разогреть.</p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#menu">
+          <span class="only-desk">Подобрать программу</span><span class="only-mob">Подобрать рацион</span>
+          <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+        </a>
+        <a class="btn btn--ghost" href="#day">Посмотреть меню</a>
+      </div>
+
+      <ul class="hero__stats">
+        <li class="stat">
+          <span class="stat__top">от</span>
+          <b class="stat__num">790₽</b>
+          <span class="stat__cap">в день</span>
+        </li>
+        <li class="stat">
+          <img class="stat__ic" src="assets/icons/ic-dish.svg" alt="" width="24" height="24" aria-hidden="true">
+          <b class="stat__num">5 блюд</b>
+          <span class="stat__cap">на каждый день</span>
+        </li>
+        <li class="stat">
+          <img class="stat__ic" src="assets/icons/ic-calendar.svg" alt="" width="24" height="24" aria-hidden="true">
+          <b class="stat__num">200+</b>
+          <span class="stat__cap">вариантов меню</span>
+        </li>
+        <li class="stat">
+          <img class="stat__ic" src="assets/icons/ic-delivery.svg" alt="" width="24" height="24" aria-hidden="true">
+          <b class="stat__num">до двери</b>
+          <span class="stat__cap">бесплатная доставка</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__panel">
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-tuna.webp"><img class="hero__ph hero__ph--tuna"    src="assets/img/hero-tuna.webp"    alt="" loading="eager" width="370" height="462"></picture>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-oatmeal.webp"><img class="hero__ph hero__ph--oat"     src="assets/img/hero-oatmeal.webp" alt="" loading="eager" width="341" height="426"></picture>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-chicken.webp"><img class="hero__ph hero__ph--chicken" src="assets/img/hero-chicken.webp" alt="" loading="eager" width="371" height="463"></picture>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-pasta.webp"><img class="hero__ph hero__ph--pasta"   src="assets/img/hero-pasta.webp"   alt="" loading="eager" width="371" height="464"></picture>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-lasagna.webp"><img class="hero__ph hero__ph--lasagna" src="assets/img/hero-lasagna.webp" alt="" loading="eager" width="309" height="386"></picture>
+        <p class="hero__badge">
+          <img src="assets/icons/ic-star-badge.svg" alt="" width="24" height="24">
+          <b>СОСТАВЛЕНО ДИЕТОЛОГАМИ</b>
+          <span>Пример рациона на день</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЦЕЛИ ================= -->
+<section class="goals" id="programs">
+  <div class="container">
+    <header class="sec__head sec__head--left">
+      <h2 class="sec__title">Какую проблему вы <em>хотите решить?</em></h2>
+      <p class="sec__lead">Сначала выбираем не калории, а вашу реальную задачу. Рацион и программа подбираются уже после этого.</p>
+    </header>
+
+    <ul class="goals__grid">
+      <li class="goal">
+        <div class="goal__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-goal-woman-measure.webp"><img src="assets/img/goal-woman-measure.webp" alt="Девушка измеряет талию сантиметровой лентой" loading="lazy" width="329" height="677"></picture></div>
+        <h3 class="goal__title">Хочу похудеть</h3>
+        <p class="goal__text">Рацион с дефицитом калорий, высоким белком и нормальными порциями — без голодовок и срывов</p>
+        <button class="btn btn--primary btn--sm goal__btn" type="button" data-goal="0">Подобрать программу</button>
+      </li>
+      <li class="goal">
+        <div class="goal__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-goal-bag-boxes.webp"><img src="assets/img/goal-bag-boxes.webp" alt="Пакет с контейнерами готовой еды" loading="lazy" width="334" height="418"></picture></div>
+        <h3 class="goal__title">Не хочу готовить</h3>
+        <p class="goal__text">Готовая еда на каждый день: завтрак, обед, ужин и перекусы уже собраны за вас.</p>
+        <button class="btn btn--primary btn--sm goal__btn" type="button" data-goal="1">Подобрать программу</button>
+      </li>
+      <li class="goal">
+        <div class="goal__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-goal-woman-eating.webp"><img src="assets/img/goal-woman-eating.webp" alt="Девушка ест из контейнера" loading="lazy" width="273" height="431"></picture></div>
+        <h3 class="goal__title">Хочу держать форму</h3>
+        <p class="goal__text">Сбалансированное питание, чтобы не считать калории и не есть хаотично.</p>
+        <button class="btn btn--primary btn--sm goal__btn" type="button" data-goal="2">Подобрать программу</button>
+      </li>
+      <li class="goal">
+        <div class="goal__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-goal-man-dumbbell.webp"><img src="assets/img/goal-man-dumbbell.webp" alt="Мужчина с гантелей и пакетом еды" loading="lazy" width="329" height="661"></picture></div>
+        <h3 class="goal__title">Хочу набрать массу</h3>
+        <p class="goal__text">Больше калорий, белка и нормальной еды для тренировок и восстановления</p>
+        <button class="btn btn--primary btn--sm goal__btn" type="button" data-goal="3">Подобрать программу</button>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= ТЁМНАЯ СЕКЦИЯ ================= -->
+<section class="why">
+  <div class="container">
+    <!-- перенос после «больше» — так строки разбиты в мобильном фрейме макета -->
+    <h2 class="sec__title why__title">Вам больше<br class="only-mob"> не нужно думать, что есть завтра!</h2>
+    <ul class="why__grid">
+      <li class="why__card">
+        <div class="why__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-card-chef-hat.webp"><img src="assets/img/card-chef-hat.webp" alt="Поварской колпак «Твой Выбор»" loading="lazy" width="293" height="242"></picture></div>
+        <h3>Готовим за вас</h3>
+        <p>Не нужно покупать продукты, стоять у плиты и мыть гору посуды.</p>
+      </li>
+      <li class="why__card">
+        <div class="why__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-card-plate-avocado.webp"><img src="assets/img/card-plate-avocado.webp" alt="Тарелка с курицей, авокадо и овощами" loading="lazy" width="263" height="257"></picture></div>
+        <h3>Считаем КБЖУ</h3>
+        <p>Рацион уже собран под калории, белки, жиры и углеводы.</p>
+      </li>
+      <li class="why__card">
+        <div class="why__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-card-bag-black.webp"><img src="assets/img/card-bag-black.webp" alt="Термосумка для доставки" loading="lazy" width="258" height="288"></picture></div>
+        <h3>Доставляем<br>по графику</h3>
+        <p>Привозим еду 3–4 раза в неделю, чтобы блюда оставались свежими.</p>
+      </li>
+      <li class="why__card">
+        <div class="why__pic"><picture><source media="(max-width:900px)" srcset="assets/img/m-card-salmon.webp"><img src="assets/img/card-salmon.webp" alt="Лосось с рисом и брокколи" loading="lazy" width="292" height="214"></picture></div>
+        <h3>Меню<br>не надоедает</h3>
+        <p>Более 200 блюд в ротации, меню обновляется каждые 4 недели.</p>
+      </li>
+    </ul>
+
+    <a class="btn btn--primary why__cta" href="#menu">
+      Подобрать рацион
+      <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+    </a>
+  </div>
+</section>
+
+<!-- ================= КОНФИГУРАТОР МЕНЮ ================= -->
+<section class="menu" id="menu">
+  <img class="menu__deco menu__deco--l" src="assets/img/menu-chicken-carrot.webp" alt="" loading="lazy" aria-hidden="true" width="404" height="292">
+
+  <div class="container">
+    <header class="sec__head">
+      <h2 class="sec__title sec__title--green">Выберите меню</h2>
+      <p class="sec__lead">Каждая программа отличается калорийностью, составом блюд и задачей. Можно начать с 1 дня, 5 дней или полноценного месяца.</p>
+    </header>
+
+    <div class="cfg" id="cfg">
+      <div class="cfg__goals" id="cfgGoals"></div>
+
+      <div class="cfg__row">
+        <p class="cfg__label">Количество блюд</p>
+        <div class="cfg__meals" id="cfgMeals"></div>
+      </div>
+
+      <picture><source media="(max-width:900px)" srcset="assets/img/m-menu-cheesecake.webp"><img class="menu__deco menu__deco--r" src="assets/img/menu-cheesecake.webp" alt="" loading="lazy" aria-hidden="true" width="342" height="295"></picture>
+
+      <div class="cfg__row">
+        <p class="cfg__label">Число дней доставки</p>
+        <div class="cfg__days" id="cfgDays"></div>
+      </div>
+
+      <p class="cfg__total">Итого: <b id="cfgTotal">6 500₽</b></p>
+
+      <a class="btn btn--primary cfg__submit" href="#order" id="cfgSubmit">
+        Оформить заказ
+        <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= МЕНЮ НА НЕДЕЛЮ (Google Sheets) ================= -->
+<section class="wmenu" id="day">
+  <div class="container">
+    <header class="sec__head">
+      <h2 class="sec__title sec__title--green">Меню на неделю</h2>
+      <p class="sec__lead">Выберите программу — и увидите точное расписание питания на каждый день.</p>
+    </header>
+
+    <div class="wmenu__progs" id="wmProgs" role="tablist" aria-label="Программы питания"></div>
+    <div class="wmenu__days"  id="wmDays"  role="tablist" aria-label="Дни недели"></div>
+
+    <div class="wmenu__sum" id="wmSum"></div>
+
+    <div class="wmenu__viewport">
+      <button class="wmenu__nav wmenu__nav--prev" type="button" id="wmPrev" aria-label="Предыдущее блюдо">
+        <img src="assets/icons/carousel-left.svg" alt="" width="19" height="41" aria-hidden="true">
+      </button>
+      <ul class="wmenu__grid" id="wmGrid" aria-live="polite"></ul>
+      <button class="wmenu__nav wmenu__nav--next" type="button" id="wmNext" aria-label="Следующее блюдо">
+        <img src="assets/icons/carousel-right.svg" alt="" width="19" height="41" aria-hidden="true">
+      </button>
+    </div>
+
+    <p class="wmenu__counter" id="wmCounter"></p>
+
+    <p class="wmenu__note">Меню составляется индивидуально нутрициологом и обновляется каждые 4 недели</p>
+
+    <a class="btn btn--primary wmenu__cta" href="#order">
+      Попробовать программу
+      <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+    </a>
+  </div>
+</section>
+
+<!-- ================= ЗЕЛЁНАЯ СЕКЦИЯ ================= -->
+<section class="keep">
+  <div class="keep__in container">
+    <div class="keep__col">
+      <h2 class="sec__title keep__title">С готовым рационом проще держать результат</h2>
+      <p class="keep__lead">Когда еда уже приготовлена, посчитана и лежит под рукой, меньше случайных заказов, срывов и решений &laquo;что бы съесть&raquo;.</p>
+
+      <ul class="keep__grid">
+        <li>
+          <img src="assets/icons/ic-fork-knife.svg" alt="" width="36" height="36" aria-hidden="true">
+          <div><h3>Не срываетесь от голода</h3><p>Рацион собран так, чтобы вы получали нормальные порции и достаточно белка.</p></div>
+        </li>
+        <li>
+          <img src="assets/icons/ic-wheat.svg" alt="" width="33" height="33" aria-hidden="true">
+          <div><h3>Не считаете каждый продукт</h3><p>Калории и КБЖУ уже рассчитаны.</p></div>
+        </li>
+        <li>
+          <img src="assets/icons/ic-apple.svg" alt="" width="32" height="32" aria-hidden="true">
+          <div><h3>Меньше случайной еды</h3><p>Когда готовая еда под рукой, меньше соблазна заказать фастфуд.</p></div>
+        </li>
+        <li>
+          <img src="assets/icons/ic-scale.svg" alt="" width="27" height="27" aria-hidden="true">
+          <div><h3>Система на каждый день</h3><p>Вы просто едите по расписанию и видите прогресс.</p></div>
+        </li>
+      </ul>
+
+      <a class="btn btn--white keep__cta" href="#menu">
+        Подобрать рацион
+        <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
+      </a>
+    </div>
+
+    <picture><source media="(max-width:900px)" srcset="assets/img/m-green-woman-bag.webp"><img class="keep__pic" src="assets/img/green-woman-bag.webp" alt="Девушка с гантелей и пакетом еды" loading="lazy" width="682" height="973"></picture>
+  </div>
+</section>
+
+<!-- ================= ШАГИ + СВЕЖЕСТЬ ================= -->
+<section class="split">
+  <div class="split__in container">
+    <article class="steps">
+      <h2 class="steps__title">Начни правильно питаться<br><em>уже завтра</em></h2>
+      <ol class="steps__list">
+        <li><b>1</b><div><h3>Вы выбираете цель</h3><p>Похудение, баланс, набор массы или просто готовая еда без готовки.</p></div></li>
+        <li><b>2</b><div><h3>Мы подбираем рацион</h3><p>Смотрим калории, срок, количество дней и удобный график доставки.</p></div></li>
+        <li><b>3</b><div><h3>Вы получаете готовые блюда</h3><p>Разогреваете за 3 минуты и едите без готовки, закупок и подсчётов.</p></div></li>
+      </ol>
+      <a class="btn btn--primary steps__cta" href="#menu">
+        Подобрать рацион
+        <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+      </a>
+      <picture><source media="(max-width:900px)" srcset="assets/img/m-steps-dish.webp"><img class="steps__pic" src="assets/img/steps-dish.webp" alt="" loading="lazy" aria-hidden="true" width="559" height="352"></picture>
+    </article>
+
+    <div class="split__col">
+      <article class="fresh">
+      <h2 class="fresh__title">Еда всегда <em>свежая!</em></h2>
+      <ul class="fresh__tags">
+        <li>Сургут и Нефтеюганск</li>
+        <li>Разогреть за 3 минуты</li>
+        <li>Удобные способы оплаты</li>
+        <li>3–4 доставки в неделю</li>
+      </ul>
+      </article>
+
+      <article class="gift" id="gift">
+        <div class="gift__col">
+          <h2 class="gift__title">Подарите заботу о здоровье</h2>
+          <p class="gift__lead">Подарочный сертификат на любую программу питания. Идеальный подарок для тех, кто хочет начать, но не решается.</p>
+          <ul class="gift__list">
+            <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Любой номинал от 1 250₽</li>
+            <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Действует 3 месяца</li>
+            <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Отправим в мессенджер сразу</li>
+          </ul>
+          <a class="btn btn--white gift__cta" href="#order">
+            Оформить сертификат
+            <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
+          </a>
+        </div>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-gift-envelope.webp"><img class="gift__pic" src="assets/img/gift-envelope.webp" alt="" loading="lazy" aria-hidden="true" width="581" height="501"></picture>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КАЛЬКУЛЯТОР ================= -->
+<section class="calc" id="calculator">
+  <div class="container">
+    <header class="sec__head">
+      <h2 class="sec__title">Не знаете, <em>какая программа вам подойдет?</em></h2>
+      <p class="sec__lead">Рассчитайте примерную норму калорий — и мы покажем подходящие варианты питания.</p>
+    </header>
+
+    <div class="calc__box">
+      <form class="calc__form" id="calcForm" novalidate>
+        <label class="field">
+          <select id="calcSex" required>
+            <option value="" selected disabled>Ваш пол</option>
+            <option value="f">Женский</option>
+            <option value="m">Мужской</option>
+          </select>
+        </label>
+        <label class="field">
+          <input id="calcHeight" type="number" inputmode="numeric" min="120" max="230" placeholder="Рост, см" required>
+        </label>
+        <label class="field">
+          <select id="calcAct" required>
+            <option value="" selected disabled>Ваша активность</option>
+            <option value="1.2">Минимальная — сидячая работа</option>
+            <option value="1.375">Низкая — 1–2 тренировки в неделю</option>
+            <option value="1.55">Средняя — 3–4 тренировки в неделю</option>
+            <option value="1.725">Высокая — 5–6 тренировок в неделю</option>
+            <option value="1.9">Очень высокая — тяжёлый труд</option>
+          </select>
+        </label>
+        <label class="field">
+          <input id="calcAge" type="number" inputmode="numeric" min="14" max="99" placeholder="Возраст" required>
+        </label>
+        <label class="field">
+          <input id="calcWeight" type="number" inputmode="numeric" min="30" max="250" placeholder="Вес, кг" required>
+        </label>
+        <label class="field">
+          <select id="calcGoal" required>
+            <option value="" selected disabled>Ваша цель</option>
+            <option value="-0.2">Снизить вес</option>
+            <option value="0">Держать форму</option>
+            <option value="0.15">Набрать массу</option>
+          </select>
+        </label>
+        <p class="calc__err" id="calcErr" role="alert" hidden>Заполните все поля, чтобы посчитать норму</p>
+      </form>
+
+      <div class="calc__res">
+        <b class="calc__num" id="calcNum">2150 ккал</b>
+        <p class="calc__cap" id="calcCap">Ваша примерная норма</p>
+        <button class="btn btn--white calc__cta" type="button" id="calcCta">
+          Подобрать программу
+          <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <picture><source media="(max-width:900px)" srcset="assets/img/m-calc-dessert.webp"><img class="calc__pic" src="assets/img/calc-dessert.webp" alt="" loading="lazy" aria-hidden="true" width="340" height="318"></picture>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОТЗЫВЫ ================= -->
+<section class="rev" id="results">
+  <div class="rev__in container">
+    <div class="rev__col">
+      <h2 class="sec__title rev__title">Люди меняют питание вместе с нами</h2>
+      <p class="rev__lead">Результаты клиентов и живые истории</p>
+      <a class="btn btn--white rev__cta" href="#menu">
+        Подобрать программу
+        <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
+      </a>
+    </div>
+
+    <div class="carousel carousel--rev" id="revCarousel">
+      <ul class="carousel__track" id="revTrack">
+        <li class="rev__slide"><picture><source media="(max-width:900px)" srcset="assets/img/m-review-phone-left.webp"><img src="assets/img/review-phone-left.webp" alt="Скриншот отзыва клиента" loading="lazy" width="181" height="345"></picture></li>
+        <li class="rev__slide"><picture><source media="(max-width:900px)" srcset="assets/img/m-review-phone-center.webp"><img src="assets/img/review-phone-center.webp" alt="Скриншот отзыва клиента" loading="lazy" width="282" height="537"></picture></li>
+        <li class="rev__slide"><picture><source media="(max-width:900px)" srcset="assets/img/m-review-phone-right.webp"><img src="assets/img/review-phone-right.webp" alt="Скриншот отзыва клиента" loading="lazy" width="181" height="345"></picture></li>
+      </ul>
+      <div class="carousel__ctrls">
+        <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Предыдущий отзыв">
+          <img src="assets/icons/carousel-left.svg" alt="" width="19" height="41" aria-hidden="true">
+        </button>
+        <button class="carousel__nav carousel__nav--next" type="button" aria-label="Следующий отзыв">
+          <img src="assets/icons/carousel-right.svg" alt="" width="19" height="41" aria-hidden="true">
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 class="sec__title faq__title">Частые вопросы</h2>
+
+    <ul class="faq__list" id="faqList">
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Как оформить заказ?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Оставьте заявку на сайте или позвоните нам — мы согласуем первую доставку на следующий день. Доставка происходит вечером, с 18:00 до 23:00.</p></div></div>
+      </li>
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Мне не надоест ваше меню?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Блюда не повторяются. Каждый день — что-то новое из любимых ингредиентов: мясо, крупы, овощи, фрукты, молочные продукты, специи. Готовим и правильные десерты. В нашей коллекции более 200 блюд.</p></div></div>
+      </li>
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Как можно перенести доставку на другой день или оформить новую?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Да. Предупредите нас заранее или в день доставки до 12:00 по Сургуту (до 11:00 по Нефтеюганску) — перенесём без проблем.</p></div></div>
+      </li>
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Можно ли похудеть, выбрав ваше питание?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Да. Питаясь только нашими блюдами, можно добиться отличных результатов. В среднем в первую неделю уходит около двух килограммов — результат зависит от исходных параметров и индивидуального обмена веществ.</p></div></div>
+      </li>
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Насколько часто у меня будет меняться меню?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Меню не повторяется четыре полные недели. Затем повторения становятся случайными, а новые блюда периодически добавляются в коллекцию.</p></div></div>
+      </li>
+      <li class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span>Когда можно изменить время и адрес доставки?</span>
+          <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+        <div class="faq__a"><div><p>Свяжитесь с менеджером до 17:00 в день доставки — скорректируем время и адрес.</p></div></div>
+      </li>
+    </ul>
+
+    <a class="btn btn--primary faq__cta" href="#order">
+      Остались вопросы?
+      <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+    </a>
+  </div>
+</section>
+
+<!-- ================= ЗАЯВКА ================= -->
+<section class="order" id="order">
+  <div class="order__in container">
+    <div class="order__col">
+      <h2 class="order__title">Начните с первой доставки</h2>
+      <p class="order__lead">Оставьте заявку — мы поможем выбрать программу, рассчитать калории и согласовать удобный график доставки.</p>
+
+      <form class="order__form" id="orderForm" novalidate>
+        <label class="field field--dark">
+          <input id="ordName" name="name" type="text" placeholder="Ваше имя" autocomplete="name" required>
+        </label>
+        <label class="field field--dark">
+          <input id="ordPhone" name="phone" type="tel" placeholder="Ваш телефон" autocomplete="tel" inputmode="tel" required>
+        </label>
+        <label class="field field--dark">
+          <input id="ordGoal" name="goal" type="text" placeholder="Ваша цель" required>
+        </label>
+        <button class="btn btn--primary order__submit" type="submit">Отправить</button>
+        <p class="order__msg" id="orderMsg" role="status"></p>
+      </form>
+    </div>
+
+    <picture><source media="(max-width:900px)" srcset="assets/img/m-cta-thermobag.webp"><img class="order__pic" src="assets/img/cta-thermobag.webp" alt="" loading="lazy" aria-hidden="true" width="825" height="825"></picture>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= ФУТЕР ================= -->
+<footer class="ftr" id="contacts">
+  <div class="ftr__in container">
+    <div class="ftr__brand">
+      <img class="ftr__logo" src="assets/img/logo-white.webp" alt="Твой Выбор" width="186" height="89" loading="lazy">
+      <p class="ftr__desc">Доставка правильного питания в Сургуте и Нефтеюганске. Готовим каждый день из натуральных продуктов.</p>
+    </div>
+
+    <div class="ftr__col">
+      <p class="ftr__cap">Адрес:</p>
+      <p class="ftr__addr" id="ftrAddr">Сургут, ул. Энергетиков, 28<br>Нефтеюганск, мкр. 16, 2</p>
+      <a class="ftr__policy" href="#">Политика конфиденциальности</a>
+    </div>
+
+    <div class="ftr__col">
+      <p class="ftr__cap">Телефон</p>
+      <a class="ftr__pill" href="tel:+79000000000">+7 (900) 000-00-00</a>
+      <ul class="ftr__soc">
+        <li><a href="#" aria-label="MAX"><img src="assets/icons/social-max.svg" alt="" width="51" height="51" loading="lazy"></a></li>
+        <li><a href="#" aria-label="ВКонтакте"><img src="assets/icons/social-vk.svg" alt="" width="51" height="51" loading="lazy"></a></li>
+        <li><a href="https://t.me/vibiraiedu" aria-label="Telegram"><img src="assets/icons/social-tg.svg" alt="" width="51" height="51" loading="lazy"></a></li>
+      </ul>
+    </div>
+
+    <div class="ftr__col">
+      <p class="ftr__cap">Почта</p>
+      <a class="ftr__pill" href="mailto:info@vibiraiedu.ru">info@vibiraiedu.ru</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
