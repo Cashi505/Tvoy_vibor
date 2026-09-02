@@ -335,7 +335,10 @@ input,select{font:inherit;color:inherit}
 .menu{position:relative;padding:clamp(60px,8vw,115px) 0 0}
 .menu__deco{position:absolute;width:clamp(150px,24vw,404px);height:auto;object-fit:cover;pointer-events:none;z-index:0}
 .menu__deco--l{left:0;top:clamp(-20px,-1vw,0px);aspect-ratio:404/292}
-.menu__deco--r{right:0;top:clamp(10px,2vw,30px);width:clamp(130px,20vw,342px);aspect-ratio:342/295}
+/* в макете фото уходит за правый край секции на 90px при ширине 1440 (узел
+   Figma #40:126: x=1188 y=2630 w=342 h=295, край секции — 1440) — 6.25vw */
+.menu__deco--r{right:clamp(-120px,-6.25vw,-30px);top:clamp(0px,1.1vw,16px);width:clamp(130px,20vw,342px);aspect-ratio:342/295}
+.menu__deco--r-m{display:none}
 .menu .container{position:relative;z-index:1}
 
 .cfg{margin-top:clamp(36px,5.49vw,79px)}
@@ -875,6 +878,9 @@ input,select{font:inherit;color:inherit}
   .keep,.rev{min-height:0}
   .wmenu__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .keep__in,.rev__in,.order__in{display:grid;gap:clamp(20px,3vw,40px)}
+  /* фото теперь вне .keep__in — отступ, который раньше давал gap грида,
+     ставим явно */
+  .keep__pic{margin-top:clamp(20px,3vw,40px)}
   .rev{padding-block:clamp(30px,5.5vw,59px);border-radius:var(--r-big);max-width:none}
   .carousel--rev{width:100%}
   .carousel--rev .carousel__track{gap:clamp(10px,2vw,24px)}
@@ -1054,10 +1060,12 @@ input,select{font:inherit;color:inherit}
   .cfg__meals{margin-top:20px}
   /* чип «Количество блюд» в макете ниже, чем чипы калорийности */
   .cfg__meals .chip{width:var(--m-chip);min-width:0;min-height:74px}
-  /* десерт-декор в макете стоит между «Количество блюд» и «Число дней» */
-  .menu__deco--l{display:none}
-  .menu__deco--r{
-    position:static;width:208px;height:auto;aspect-ratio:208/180;
+  /* десерт-декор в макете стоит между «Количество блюд» и «Число дней» —
+     десктопная версия (--r) скрыта, вместо неё показан мобильный вариант
+     (--r-m), лежащий в разметке прямо в этом месте */
+  .menu__deco--l,.menu__deco--r{display:none}
+  .menu__deco--r-m{
+    display:block;position:static;width:208px;height:auto;aspect-ratio:208/180;
     margin:17px auto 0;
   }
   .cfg__days{

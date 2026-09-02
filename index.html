@@ -197,6 +197,11 @@
 <!-- ================= КОНФИГУРАТОР МЕНЮ ================= -->
 <section class="menu" id="menu">
   <img class="menu__deco menu__deco--l" src="assets/img/menu-chicken-carrot.webp" alt="" loading="lazy" aria-hidden="true" width="404" height="292">
+  <!-- десктопный вариант — прямой потомок .menu, а не #cfg: у #cfg класс reveal,
+       transform на время анимации появления делает #cfg containing block для
+       position:absolute потомков, и фото на миг уезжает в неправильное место
+       (см. HANDOFF.md). На ≤900px эта картинка скрыта — там своя, ниже. -->
+  <img class="menu__deco menu__deco--r" src="assets/img/menu-cheesecake.webp" alt="" loading="lazy" aria-hidden="true" width="342" height="295">
 
   <div class="container">
     <header class="sec__head">
@@ -212,7 +217,9 @@
         <div class="cfg__meals" id="cfgMeals"></div>
       </div>
 
-      <picture><source media="(max-width:900px)" srcset="assets/img/m-menu-cheesecake.webp"><img class="menu__deco menu__deco--r" src="assets/img/menu-cheesecake.webp" alt="" loading="lazy" aria-hidden="true" width="342" height="295"></picture>
+      <!-- мобильный вариант (≤900px): в макете стоит между «Количество блюд»
+           и «Число дней» в потоке, поэтому остаётся здесь, а не рядом с --l -->
+      <picture><source media="(max-width:900px)" srcset="assets/img/m-menu-cheesecake.webp"><img class="menu__deco menu__deco--r-m" src="assets/img/menu-cheesecake.webp" alt="" loading="lazy" aria-hidden="true" width="342" height="295"></picture>
 
       <div class="cfg__row">
         <p class="cfg__label">Число дней доставки</p>
@@ -294,9 +301,13 @@
         <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
       </a>
     </div>
-
-    <picture><source media="(max-width:900px)" srcset="assets/img/m-green-woman-bag.webp"><img class="keep__pic" src="assets/img/green-woman-bag.webp" alt="Девушка с гантелей и пакетом еды" loading="lazy" width="682" height="973"></picture>
   </div>
+
+  <!-- фото — прямой потомок .keep, а не .keep__in: bottom:0 должен прилегать
+       к низу самой зелёной секции, а не к низу внутреннего контейнера
+       с текстом, у которого есть свой нижний паддинг (иначе между фото
+       и низом секции остаётся зазор с шириной этого паддинга) -->
+  <picture><source media="(max-width:900px)" srcset="assets/img/m-green-woman-bag.webp"><img class="keep__pic" src="assets/img/green-woman-bag.webp" alt="Девушка с гантелей и пакетом еды" loading="lazy" width="682" height="973"></picture>
 </section>
 
 <!-- ================= ШАГИ + СВЕЖЕСТЬ ================= -->

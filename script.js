@@ -19,12 +19,12 @@
       name: 'Снижение веса',
       programs: [
         {
-          kcal: 900,  kcalLabel: '900 ккал',   name: 'Экспресс-фигура', sale: true,
+          kcal: 900,  kcalLabel: '900 ккал',   name: 'Экспресс-фигура', sale: true, meals: 5,
           prices: { 1: 1250, 5: 6000, 7: 8350, 14: 16300, 30: 34500 },
           gift:   { 14: '2 дня в подарок' }
         },
         {
-          kcal: 1400, kcalLabel: '1 400 ккал', name: 'Коррекция фигуры',
+          kcal: 1400, kcalLabel: '1 400 ккал', name: 'Коррекция фигуры', meals: 5,
           prices: { 1: 1300, 5: 6250, 7: 8650, 14: 16950, 30: 35900 },
           gift:   { 14: '2 дня в подарок' }
         }
@@ -34,7 +34,7 @@
       name: 'Не хочу готовить',
       programs: [
         {
-          kcal: 1200, kcalLabel: '1 200 ккал', name: '3-х разовое питание',
+          kcal: 1200, kcalLabel: '1 200 ккал', name: '3-х разовое питание', meals: 3,
           prices: { 1: 1150, 5: 5500, 7: 7650, 14: 15000, 30: 31200 },
           gift:   { 14: '2 дня в подарок' }
         }
@@ -44,12 +44,12 @@
       name: 'Баланс',
       programs: [
         {
-          kcal: 1800, kcalLabel: '1 800 ккал', name: 'Будь в форме!',
+          kcal: 1800, kcalLabel: '1 800 ккал', name: 'Будь в форме!', meals: 5,
           prices: { 1: 1350, 5: 6500, 7: 9000, 14: 17600, 30: 37300 },
           gift:   { 30: '6 дней в подарок' }
         },
         {
-          kcal: 2200, kcalLabel: '2 200 ккал', name: 'Всегда в форме',
+          kcal: 2200, kcalLabel: '2 200 ккал', name: 'Всегда в форме', meals: 5,
           prices: { 1: 1450, 5: 7000, 7: 9650, 14: 18900, 30: 40000 },
           gift:   { 30: '6 дней в подарок' }
         }
@@ -59,7 +59,7 @@
       name: 'Набор массы',
       programs: [
         {
-          kcal: 3000, kcalLabel: '3 000 ккал', name: 'Масса',
+          kcal: 3000, kcalLabel: '3 000 ккал', name: 'Масса', meals: 5,
           prices: { 1: 1750, 5: 8500, 7: 11650, 14: 22800, 30: 48300 }
         }
       ]
@@ -67,11 +67,10 @@
   ];
 
   const TRIAL = { price: 790, note: 'Пробный рацион на 1 день' };
-  const MEALS = [{ id: 3, label: '3 блюда' }];
   const DAYS  = [1, 5, 7, 14, 30];
 
   /* по умолчанию — как в макете: Снижение веса → 900 ккал → 5 дней */
-  const state = { goal: 0, prog: 0, meals: 0, days: 5, trial: false };
+  const state = { goal: 0, prog: 0, days: 5, trial: false };
 
   const currentProgram = () => GOALS[state.goal].programs[state.prog];
 
@@ -180,11 +179,15 @@
       </div>`).join('');
   }
 
+  /* количество блюд — не выбор пользователя, а фиксированное свойство
+     программы (данные сверены с настоящим сайтом vibiraiedu.ru: у каждой
+     программы своё число приёмов пищи, не всегда 3) */
   function renderMeals() {
-    elMeals.innerHTML = MEALS.map((m, i) => `
-      <button class="chip${i === state.meals ? ' is-on' : ''}" type="button" data-meal="${i}">
-        <b>${m.label}</b>
-      </button>`).join('');
+    const n = currentProgram().meals;
+    elMeals.innerHTML = `
+      <div class="chip is-on">
+        <b>${n} ${plural(n, 'блюдо', 'блюда', 'блюд')}</b>
+      </div>`;
   }
 
   function renderDays() {
@@ -241,13 +244,6 @@
     state.prog = +btn.dataset.prog;
     if (!currentProgram().prices[state.days]) state.days = 5;
     renderCfg();
-  });
-
-  elMeals.addEventListener('click', e => {
-    const btn = e.target.closest('[data-meal]');
-    if (!btn) return;
-    state.meals = +btn.dataset.meal;
-    renderMeals();
   });
 
   elDays.addEventListener('click', e => {
