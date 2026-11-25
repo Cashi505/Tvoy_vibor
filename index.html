@@ -78,7 +78,7 @@
           <span class="only-desk">Подобрать программу</span><span class="only-mob">Подобрать рацион</span>
           <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
         </a>
-        <a class="btn btn--ghost" href="#day">Посмотреть меню</a>
+        <a class="btn btn--ghost" href="#day">Посмотреть пример рациона</a>
       </div>
 
       <ul class="hero__stats">
@@ -105,7 +105,7 @@
       </ul>
     </div>
 
-    <div class="hero__art" aria-hidden="true">
+    <div class="hero__art" id="day">
       <div class="hero__panel">
         <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-tuna.webp"><img class="hero__ph hero__ph--tuna"    src="assets/img/hero-tuna.webp"    alt="" loading="eager" width="370" height="462"></picture>
         <picture><source media="(max-width:900px)" srcset="assets/img/m-hero-oatmeal.webp"><img class="hero__ph hero__ph--oat"     src="assets/img/hero-oatmeal.webp" alt="" loading="eager" width="341" height="426"></picture>
@@ -115,7 +115,7 @@
         <p class="hero__badge">
           <img src="assets/icons/ic-star-badge.svg" alt="" width="24" height="24">
           <b>СОСТАВЛЕНО ДИЕТОЛОГАМИ</b>
-          <span>Пример рациона на день</span>
+          <span>Пример рациона на день<br>Возможны замены блюд</span>
         </p>
       </div>
     </div>
@@ -233,40 +233,6 @@
         <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
       </a>
     </div>
-  </div>
-</section>
-
-<!-- ================= МЕНЮ НА НЕДЕЛЮ (Google Sheets) ================= -->
-<section class="wmenu" id="day">
-  <div class="container">
-    <header class="sec__head">
-      <h2 class="sec__title sec__title--green">Меню на неделю</h2>
-      <p class="sec__lead">Выберите программу — и увидите точное расписание питания на каждый день.</p>
-    </header>
-
-    <div class="wmenu__progs" id="wmProgs" role="tablist" aria-label="Программы питания"></div>
-    <div class="wmenu__days"  id="wmDays"  role="tablist" aria-label="Дни недели"></div>
-
-    <div class="wmenu__sum" id="wmSum"></div>
-
-    <div class="wmenu__viewport">
-      <button class="wmenu__nav wmenu__nav--prev" type="button" id="wmPrev" aria-label="Предыдущее блюдо">
-        <img src="assets/icons/carousel-left.svg" alt="" width="19" height="41" aria-hidden="true">
-      </button>
-      <ul class="wmenu__grid" id="wmGrid" aria-live="polite"></ul>
-      <button class="wmenu__nav wmenu__nav--next" type="button" id="wmNext" aria-label="Следующее блюдо">
-        <img src="assets/icons/carousel-right.svg" alt="" width="19" height="41" aria-hidden="true">
-      </button>
-    </div>
-
-    <p class="wmenu__counter" id="wmCounter"></p>
-
-    <p class="wmenu__note">Меню составляется индивидуально нутрициологом и обновляется каждые 4 недели</p>
-
-    <a class="btn btn--primary wmenu__cta" href="#order">
-      Попробовать программу
-      <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
-    </a>
   </div>
 </section>
 

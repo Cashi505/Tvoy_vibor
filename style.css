@@ -232,7 +232,7 @@ input,select{font:inherit;color:inherit}
 .stat__cap{margin-top:4px;font-size:var(--fs-sm);color:var(--ink-54)}
 
 /* --- коллаж --- */
-.hero__art{position:relative;margin-right:calc(-1 * var(--bleed));min-width:0;
+.hero__art{position:relative;scroll-margin-top:88px;margin-right:calc(-1 * var(--bleed));min-width:0;
   margin-bottom:calc(-1 * clamp(0px, 20.2vw, 291px))}
 .hero__panel{
   position:relative;
@@ -251,7 +251,7 @@ input,select{font:inherit;color:inherit}
 .hero__ph--lasagna{left:58.50%; top:73.74%;  width:46.47%}
 
 .hero__badge{
-  position:absolute;left:13.23%;top:91.5%;
+  position:absolute;left:13.23%;top:89%;
   display:grid;grid-template-columns:auto 1fr;gap:2px 8px;
   color:var(--white);
 }
@@ -446,143 +446,6 @@ input,select{font:inherit;color:inherit}
 .carousel__nav:hover{background:rgba(49,165,51,.10)}
 .carousel__nav img{width:19px;height:41px;object-fit:contain}
 
-/* =========================================================
-   МЕНЮ НА НЕДЕЛЮ (данные из Google Sheets)
-   ========================================================= */
-.wmenu{padding:clamp(48px,9.44vw,136px) 0 clamp(56px,12.9vw,186px)}
-
-/* --- переключатель программ ---
-   расположение и поведение — как в старом сайте (_old): ряд слева направо,
-   переносится на новую строку вместо горизонтальной прокрутки. Цвета и
-   типографика — свои, сайта нового. */
-.wmenu__progs{
-  display:flex;flex-wrap:wrap;justify-content:flex-start;
-  gap:9px;
-  margin-top:clamp(26px,3.96vw,57px);
-}
-.wmenu__prog{width:auto;min-height:0;min-width:0;padding:11px 21px}
-/* название программы — обычный вес чипа (24px) слишком крупный для длинных
-   слов вроде «Сбалансированное» и вылезал за пределы пилюли */
-.wmenu__prog b{font-size:16px;font-weight:800;line-height:1.25;letter-spacing:-.01em;overflow-wrap:anywhere;white-space:normal}
-.wmenu__prog span{font-size:var(--fs-sm);margin-top:2px}
-
-/* --- дни недели: та же логика — перенос строки, не прокрутка --- */
-.wmenu__days{
-  display:flex;flex-wrap:wrap;justify-content:flex-start;
-  gap:8px;
-  margin-top:clamp(16px,2.08vw,30px);
-}
-.wmenu__day{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  width:clamp(60px,5.7vw,76px);min-height:60px;padding:8px;
-  border:1px solid var(--line);border-radius:var(--r-card);
-  background:var(--white);
-  transition:border-color .22s var(--ease),color .22s var(--ease),box-shadow .22s var(--ease);
-}
-.wmenu__day:hover{border-color:var(--green)}
-.wmenu__day-name{font-size:var(--fs-body);font-weight:800;line-height:1}
-.wmenu__day-date{font-size:var(--fs-sm);color:var(--ink-54)}
-/* в старом сайте активный день — не заливка, а зелёное кольцо-обводка */
-.wmenu__day.is-on{border-color:var(--green);box-shadow:0 0 0 1px var(--green);color:var(--green)}
-.wmenu__day.is-on .wmenu__day-date{color:var(--green)}
-
-/* --- сводка за день: как в старом сайте — одна рамка с внутренними
-   разделителями, а не отдельные плашки с зазорами --- */
-.wmenu__sum{
-  display:flex;
-  margin-top:clamp(20px,2.78vw,40px);
-  border:1px solid rgba(49,165,51,.35);border-radius:var(--r-card);
-  overflow:hidden;
-  text-align:center;
-}
-.wmenu__sum-item{
-  flex:1;display:flex;flex-direction:column;gap:3px;
-  padding:16px 8px;
-  border-right:1px solid var(--line);
-}
-.wmenu__sum-item:last-child{border-right:none}
-.wmenu__sum-item b{font-size:var(--fs-h3);font-weight:800;line-height:1;letter-spacing:-.03em}
-.wmenu__sum-item span{font-size:var(--fs-sm);color:var(--ink-54)}
-.wmenu__sum-item--kcal b{color:var(--green)}
-
-/* --- сетка карточек --- */
-.wmenu__viewport{position:relative;margin-top:clamp(22px,3.06vw,44px)}
-.wmenu__grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(14px,1.67vw,24px);
-}
-/* карточка блюда — структура как в старом сайте: цветная плашка приёма
-   пищи во всю ширину, фото фиксированной высоты встык с плашкой, текст
-   слева, полосы-разделители у КБЖУ. Внутренний отступ живёт не на самой
-   карточке (иначе плашка и фото не будут во всю ширину), а на каждом
-   элементе — плашке, названии, весе. */
-.wmenu__card{
-  display:flex;flex-direction:column;
-  text-align:left;
-  border:1px solid var(--line);border-radius:var(--r-card);
-  background:var(--white);
-  overflow:hidden;
-  transition:border-color .22s var(--ease),transform .22s var(--ease);
-}
-.wmenu__card:hover{border-color:var(--green);transform:translateY(-2px)}
-.wmenu__meal{
-  padding:8px 16px;
-  background:rgba(49,165,51,.12);
-  border-bottom:1px solid var(--line);
-  font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.16em;
-}
-.wmenu__img{
-  width:100%;height:165px;object-fit:cover;display:block;
-  background:rgba(26,26,26,.04);
-}
-.wmenu__name{padding:0 16px;margin-top:14px;font-size:var(--fs-body);font-weight:800;line-height:1.3;letter-spacing:-.01em}
-.wmenu__weight{padding:0 16px;margin-top:4px;margin-bottom:12px;font-size:var(--fs-sm);color:var(--ink-54)}
-.wmenu__miss{padding:0 16px 16px;margin-top:8px;font-size:var(--fs-sm);color:var(--red)}
-.wmenu__macros{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  margin-top:auto;border-top:1px solid var(--line);
-  text-align:center;
-}
-.wmenu__macros li{
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:10px 4px;border-right:1px solid var(--line);
-}
-.wmenu__macros li:last-child{border-right:none}
-.wmenu__macros b{font-size:var(--fs-body);font-weight:800;line-height:1}
-.wmenu__macros span{font-size:11px;color:var(--ink-54)}
-.wmenu__macro--kcal b{color:var(--green)}
-
-/* состояния: загрузка, пустая программа, ошибка */
-.wmenu__state{
-  grid-column:1/-1;
-  padding:clamp(34px,4.2vw,60px) 24px;
-  border:1px dashed var(--ink-18);border-radius:var(--r-card);
-  text-align:center;color:var(--ink-54);
-}
-
-/* стрелки карусели — только на мобильном. Тёмный полупрозрачный кружок
-   поверх фото, как в старом сайте: держит контраст на любой картинке,
-   в отличие от белого круга, который на светлом фото терялся. */
-.wmenu__nav{
-  --wm-strip-h:34px;--wm-photo-h:190px;
-  display:none;position:absolute;
-  top:calc(var(--wm-strip-h) + var(--wm-photo-h)/2);transform:translateY(-50%);z-index:2;
-  place-items:center;width:40px;height:40px;
-  border-radius:50%;background:rgba(26,26,26,.52);border:1px solid rgba(255,255,255,.2);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  transition:background-color .2s var(--ease),opacity .2s var(--ease);
-}
-.wmenu__nav:active:not(:disabled){background:rgba(49,165,51,.85);border-color:var(--green)}
-/* иконка перекрашена в белый фильтром — свой файл, тот же, что у карусели отзывов */
-.wmenu__nav img{width:11px;height:24px;object-fit:contain;filter:brightness(0) invert(1)}
-.wmenu__nav:disabled{cursor:default;opacity:.18;pointer-events:none}
-.wmenu__counter{display:none}
-
-.wmenu__note{
-  margin-top:clamp(20px,2.78vw,40px);
-  font-size:var(--fs-sm);color:var(--ink-54);text-align:center;
-}
-.wmenu__cta{display:flex;width:289px;margin:clamp(14px,1.94vw,28px) auto 0}
 /* =========================================================
    ЗЕЛЁНАЯ СЕКЦИЯ
    ========================================================= */
@@ -876,7 +739,6 @@ input,select{font:inherit;color:inherit}
     width:min(560px,100%);margin-inline:auto;
   }
   .keep,.rev{min-height:0}
-  .wmenu__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .keep__in,.rev__in,.order__in{display:grid;gap:clamp(20px,3vw,40px)}
   /* фото теперь вне .keep__in — отступ, который раньше давал gap грида,
      ставим явно */
@@ -1076,53 +938,17 @@ input,select{font:inherit;color:inherit}
   /* в мобильном фрейме цена в чипе 24px */
   .day-chip__price{font-size:24px}
   .cfg__total{margin-top:55px}
-  .cfg__submit,.wmenu__cta,.faq__cta,.steps__cta,.order__submit,.rev__cta,.gift__cta,.calc__cta{
+  .cfg__submit,.faq__cta,.steps__cta,.order__submit,.rev__cta,.gift__cta,.calc__cta{
     width:var(--m-btn);margin-inline:auto;
   }
   .faq__cta{margin-right:auto}
 
-  /* ---------- МЕНЮ НА НЕДЕЛЮ ---------- */
-  .wmenu{padding:84px 0 102px}
-  .wmenu .sec__title{max-width:357px}
-  .wmenu .sec__lead{max-width:338px;margin-top:20px}
   /* правила .carousel* ниже нужны карусели отзывов */
   .carousel{position:relative;margin-top:44px;gap:0}
   .carousel__track{gap:58px;justify-content:center;overflow:visible}
   .carousel__nav{position:absolute;top:52px;z-index:2}
   .carousel__nav--prev{left:0}
   .carousel__nav--next{right:0}
-
-  /* программы — как в старом сайте: сетка 2 колонки на всю ширину,
-     без горизонтальной прокрутки */
-  .wmenu__progs{
-    display:grid;grid-template-columns:repeat(2,1fr);
-    gap:9px;
-  }
-  .wmenu__prog{width:auto;padding:8px}
-  .wmenu__prog b{font-size:13px;white-space:normal;text-align:center}
-  /* дни — просто перенос строки, как в старом сайте (6 + 1 в остатке) */
-  .wmenu__days{flex-wrap:wrap;justify-content:flex-start}
-  .wmenu__day{width:56px;min-height:56px}
-
-  /* карточки — карусель по одной на экран, как в старом сайте */
-  .wmenu__grid{
-    display:flex;gap:14px;
-    overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
-    margin-inline:calc(-1 * var(--pad));padding-inline:var(--pad);
-  }
-  .wmenu__grid::-webkit-scrollbar{display:none}
-  .wmenu__card{flex:0 0 100%;scroll-snap-align:start}
-  .wmenu__card:hover{transform:none}
-  .wmenu__img{height:190px}
-  .wmenu__state{flex:0 0 100%}
-  /* стрелки лежат прямо на фото, вплотную к его краям — как в старом сайте */
-  .wmenu__nav{display:grid;--wm-photo-h:190px}
-  .wmenu__nav--prev{left:10px}
-  .wmenu__nav--next{right:10px}
-  .wmenu__counter{
-    display:block;margin-top:16px;
-    font-size:var(--fs-sm);font-weight:700;color:var(--ink-54);text-align:center;
-  }
 
   /* ---------- ЗЕЛЁНАЯ СЕКЦИЯ ---------- */
   .keep{padding-block:52px 0;border-radius:0 60px 0 0}
