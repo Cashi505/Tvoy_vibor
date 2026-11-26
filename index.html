@@ -30,6 +30,7 @@
       <a href="#calculator">Калькулятор</a>
       <a href="#results">Отзывы</a>
       <a href="#faq">Вопросы и ответы</a>
+      <a href="#contacts">Контакты</a>
     </nav>
 
     <div class="hdr__side">
@@ -124,6 +125,7 @@
 
 <!-- ================= ЦЕЛИ ================= -->
 <section class="goals" id="programs">
+  <span class="legacy-anchor" id="about-us" aria-hidden="true"></span>
   <div class="container">
     <header class="sec__head sec__head--left">
       <h2 class="sec__title">Какую проблему вы <em>хотите решить?</em></h2>
@@ -196,6 +198,7 @@
 
 <!-- ================= КОНФИГУРАТОР МЕНЮ ================= -->
 <section class="menu" id="menu">
+  <span class="legacy-anchor" id="chose-program" aria-hidden="true"></span>
   <img class="menu__deco menu__deco--l" src="assets/img/menu-chicken-carrot.webp" alt="" loading="lazy" aria-hidden="true" width="404" height="292">
   <!-- десктопный вариант — прямой потомок .menu, а не #cfg: у #cfg класс reveal,
        transform на время анимации появления делает #cfg containing block для
@@ -314,7 +317,7 @@
             <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Действует 3 месяца</li>
             <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Отправим в мессенджер сразу</li>
           </ul>
-          <a class="btn btn--white gift__cta" href="#order">
+          <a class="btn btn--white gift__cta" href="#order" data-contact-intent="Подарочный сертификат">
             Оформить сертификат
             <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
           </a>
@@ -343,7 +346,7 @@
           </select>
         </label>
         <label class="field">
-          <input id="calcHeight" type="number" inputmode="numeric" min="120" max="230" placeholder="Рост, см" required>
+          <input id="calcHeight" aria-label="Рост, см" type="number" inputmode="numeric" min="120" max="230" placeholder="Рост, см" required>
         </label>
         <label class="field">
           <select id="calcAct" required>
@@ -356,10 +359,10 @@
           </select>
         </label>
         <label class="field">
-          <input id="calcAge" type="number" inputmode="numeric" min="14" max="99" placeholder="Возраст" required>
+          <input id="calcAge" aria-label="Возраст" type="number" inputmode="numeric" min="14" max="99" placeholder="Возраст" required>
         </label>
         <label class="field">
-          <input id="calcWeight" type="number" inputmode="numeric" min="30" max="250" placeholder="Вес, кг" required>
+          <input id="calcWeight" aria-label="Вес, кг" type="number" inputmode="numeric" min="30" max="250" placeholder="Вес, кг" required>
         </label>
         <label class="field">
           <select id="calcGoal" required>
@@ -369,12 +372,12 @@
             <option value="0.15">Набрать массу</option>
           </select>
         </label>
-        <p class="calc__err" id="calcErr" role="alert" hidden>Заполните все поля, чтобы посчитать норму</p>
+        <p class="calc__err" id="calcErr" role="alert" hidden>Проверьте значения в отмеченных полях</p>
       </form>
 
       <div class="calc__res">
-        <b class="calc__num" id="calcNum">2150 ккал</b>
-        <p class="calc__cap" id="calcCap">Ваша примерная норма</p>
+        <b class="calc__num" id="calcNum" aria-live="polite">0 ккал</b>
+        <p class="calc__cap" id="calcCap">Заполните поля для расчёта</p>
         <button class="btn btn--white calc__cta" type="button" id="calcCta">
           Подобрать программу
           <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
@@ -387,6 +390,7 @@
 
 <!-- ================= ОТЗЫВЫ ================= -->
 <section class="rev" id="results">
+  <span class="legacy-anchor" id="reviews" aria-hidden="true"></span>
   <div class="rev__in container">
     <div class="rev__col">
       <h2 class="sec__title rev__title">Люди меняют питание вместе с нами</h2>
@@ -426,7 +430,7 @@
           <span>Как оформить заказ?</span>
           <img src="assets/icons/chevron-faq.svg" alt="" width="24" height="24" aria-hidden="true">
         </button>
-        <div class="faq__a"><div><p>Оставьте заявку на сайте или позвоните нам — мы согласуем первую доставку на следующий день. Доставка происходит вечером, с 18:00 до 23:00.</p></div></div>
+        <div class="faq__a"><div><p>Напишите нам в <a href="https://api.whatsapp.com/send?phone=79026909192" target="_blank" rel="noopener">WhatsApp</a> или <a href="tel:+79026909192">позвоните по номеру 8 (902) 690-91-92</a> за день до первой доставки. Доставляем вечером, с 18:00 до 23:00.</p></div></div>
       </li>
       <li class="faq__item">
         <button class="faq__q" type="button" aria-expanded="false">
@@ -465,33 +469,28 @@
       </li>
     </ul>
 
-    <a class="btn btn--primary faq__cta" href="#order">
+    <a class="btn btn--primary faq__cta" href="#order" data-contact-intent="Вопрос о питании или доставке">
       Остались вопросы?
       <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
     </a>
   </div>
 </section>
 
-<!-- ================= ЗАЯВКА ================= -->
+<!-- ================= ЗАКАЗ И СВЯЗЬ ================= -->
 <section class="order" id="order">
+  <span class="legacy-anchor" id="modal-order" aria-hidden="true"></span>
+  <span class="legacy-anchor" id="modal-banner" aria-hidden="true"></span>
   <div class="order__in container">
     <div class="order__col">
       <h2 class="order__title">Начните с первой доставки</h2>
-      <p class="order__lead">Оставьте заявку — мы поможем выбрать программу, рассчитать калории и согласовать удобный график доставки.</p>
-
-      <form class="order__form" id="orderForm" novalidate>
-        <label class="field field--dark">
-          <input id="ordName" name="name" type="text" placeholder="Ваше имя" autocomplete="name" required>
-        </label>
-        <label class="field field--dark">
-          <input id="ordPhone" name="phone" type="tel" placeholder="Ваш телефон" autocomplete="tel" inputmode="tel" required>
-        </label>
-        <label class="field field--dark">
-          <input id="ordGoal" name="goal" type="text" placeholder="Ваша цель" required>
-        </label>
-        <button class="btn btn--primary order__submit" type="submit">Отправить</button>
-        <p class="order__msg" id="orderMsg" role="status"></p>
-      </form>
+      <p class="order__lead">Напишите нам или позвоните. Поможем выбрать программу и согласуем график доставки. На связи ежедневно с 9:00 до 23:00.</p>
+      <p class="order__summary" id="orderSummary" aria-live="polite" hidden></p>
+      <ul class="order__channels" aria-label="Оформить через мессенджер">
+        <li><a class="btn btn--white" target="_blank" rel="noopener" href="https://t.me/tvoivibor86">Telegram</a></li>
+        <li><a class="btn btn--white" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=79026909192">WhatsApp</a></li>
+        <li><a class="btn btn--white" target="_blank" rel="noopener" href="https://max.ru/u/f9LHodD0cOKBiwwO8ZmB5mFTm1brSR5f_rtA6RkVhMMDr-h_zGhriRjhoVQ">MAX</a></li>
+      </ul>
+      <a class="order__call" href="tel:+79026909192">Позвонить 8 (902) 690-91-92</a>
     </div>
 
     <picture><source media="(max-width:900px)" srcset="assets/img/m-cta-thermobag.webp"><img class="order__pic" src="assets/img/cta-thermobag.webp" alt="" loading="lazy" aria-hidden="true" width="825" height="825"></picture>
@@ -506,27 +505,28 @@
     <div class="ftr__brand">
       <img class="ftr__logo" src="assets/img/logo-white.webp" alt="Твой Выбор" width="186" height="89" loading="lazy">
       <p class="ftr__desc">Доставка правильного питания в Сургуте и Нефтеюганске. Готовим каждый день из натуральных продуктов.</p>
+      <p class="ftr__copy">Твой выбор 2026. Все права защищены.</p>
     </div>
 
     <div class="ftr__col">
-      <p class="ftr__cap">Адрес:</p>
-      <p class="ftr__addr" id="ftrAddr">Сургут, ул. Энергетиков, 28<br>Нефтеюганск, мкр. 16, 2</p>
-      <a class="ftr__policy" href="#">Политика конфиденциальности</a>
+      <p class="ftr__cap">Реквизиты</p>
+      <p class="ftr__addr">ИП Куюмчян Найри Юрикович<br>ИНН 860232785976<br>ОГРНИП 326080000022618<br>г. Сургут, ул. Генерала Иванова, 1</p>
+      <a class="ftr__policy" href="/policy/">Политика конфиденциальности</a>
     </div>
 
     <div class="ftr__col">
       <p class="ftr__cap">Телефон</p>
-      <a class="ftr__pill" href="tel:+79000000000">+7 (900) 000-00-00</a>
+      <a class="ftr__pill" href="tel:83462909192">8 (3462) 90-91-92</a>
       <ul class="ftr__soc">
-        <li><a href="#" aria-label="MAX"><img src="assets/icons/social-max.svg" alt="" width="51" height="51" loading="lazy"></a></li>
-        <li><a href="#" aria-label="ВКонтакте"><img src="assets/icons/social-vk.svg" alt="" width="51" height="51" loading="lazy"></a></li>
-        <li><a href="https://t.me/vibiraiedu" aria-label="Telegram"><img src="assets/icons/social-tg.svg" alt="" width="51" height="51" loading="lazy"></a></li>
+        <li><a target="_blank" rel="noopener" href="https://vk.com/tvoivibor_86">ВКонтакте</a></li>
+        <li><a id="ftrInstagram" target="_blank" rel="noopener" href="https://instagram.com/tvoivibor_surgut?utm_medium=copy_link">Instagram</a></li>
       </ul>
     </div>
 
-    <div class="ftr__col">
-      <p class="ftr__cap">Почта</p>
-      <a class="ftr__pill" href="mailto:info@vibiraiedu.ru">info@vibiraiedu.ru</a>
+    <div class="ftr__col ftr__links">
+      <p class="ftr__cap">Связаться с нами</p>
+      <a href="#order" data-contact-intent="">Оформить через мессенджер</a>
+      <a href="#order" data-contact-intent="Запрос коммерческого предложения">Партнёрам и бизнесу</a>
     </div>
   </div>
 </footer>

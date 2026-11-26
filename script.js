@@ -178,9 +178,9 @@
   const cityBtn = $('.city__btn', city);
   const cityList = $('.city__list', city);
   const cityName = $('#cityName');
-  const ADDRESS = {
-    'Сургут':      'Сургут, ул. Энергетиков, 28',
-    'Нефтеюганск': 'Нефтеюганск, мкр. 16, 2'
+  const INSTAGRAM = {
+    'Сургут': 'https://instagram.com/tvoivibor_surgut?utm_medium=copy_link',
+    'Нефтеюганск': 'https://instagram.com/tvoivibor_nefteugansk?utm_medium=copy_link'
   };
 
   cityBtn.addEventListener('click', () => {
@@ -194,10 +194,8 @@
     $$('[role="option"]', cityList).forEach(option => {
       option.setAttribute('aria-selected', String(option.dataset.city === name));
     });
-    const addresses = [name, ...Object.keys(ADDRESS).filter(city => city !== name)];
-    $('#ftrAddr').innerHTML = addresses.map(city =>
-      city === name ? '<b>' + ADDRESS[city] + '</b>' : ADDRESS[city]
-    ).join('<br>');
+    $('#ftrInstagram').href = INSTAGRAM[name];
+    showOrderSummary('');
     const trialPrices = Object.values(TARIFFS[name]).map(tariffs => tariffs[0].price);
     $('#heroTrialPrice').textContent = money(Math.min(...trialPrices));
     resetDuration();
@@ -221,6 +219,32 @@
     if (!city.contains(e.target)) {
       cityBtn.setAttribute('aria-expanded', 'false');
       cityList.hidden = true;
+    }
+  });
+
+  city.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !cityList.hidden) {
+      cityBtn.click();
+      cityBtn.focus();
+      return;
+    }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    const options = $$('[role="option"]', cityList);
+    if (cityList.hidden) {
+      cityBtn.click();
+      options.find(option => option.getAttribute('aria-selected') === 'true').focus();
+      return;
+    }
+    const current = options.indexOf(document.activeElement);
+    const step = e.key === 'ArrowDown' ? 1 : -1;
+    options[(current + step + options.length) % options.length].focus();
+  });
+
+  nav.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+      burger.click();
+      burger.focus();
     }
   });
 
@@ -347,21 +371,38 @@
   const requestedCity = new URLSearchParams(location.search).get('city');
   selectCity(Object.hasOwn(TARIFFS, requestedCity) ? requestedCity : state.city);
 
+  function goToMenu() {
+    if (location.hash === '#menu') $('#menu').scrollIntoView();
+    else location.hash = 'menu';
+  }
+
   /* кнопки «Подобрать программу» на карточках целей */
   $$('.goal__btn').forEach(btn => {
     btn.addEventListener('click', () => {
       selectProgram(+btn.dataset.goal, 0);
-      $('#menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      goToMenu();
     });
   });
 
-  /* перенос выбора в форму заявки */
+  function showOrderSummary(text) {
+    const summary = $('#orderSummary');
+    summary.textContent = text;
+    summary.hidden = !text;
+  }
+
+  $$('[data-contact-intent]').forEach(link => {
+    link.addEventListener('click', () => {
+      const intent = link.dataset.contactIntent;
+      showOrderSummary(intent ? `${state.city}, ${intent}` : '');
+    });
+  });
+
   $('#cfgSubmit').addEventListener('click', () => {
     const program = currentProgram();
     const tariff = selectedTariff();
     const duration = tariff.trial ? 'Пробные 2 дня' : dayLabel(tariff.days);
     const gift = tariff.gift ? ` (+${dayLabel(tariff.gift)} в подарок)` : '';
-    $('#ordGoal').value = `${state.city}, ${program.name}, ${program.kcalLabel}, ${duration}${gift}, ${money(tariff.price)}`;
+    showOrderSummary(`${state.city}, ${program.name}, ${program.kcalLabel}, ${duration}${gift}, ${money(tariff.price)}`);
   });
 
   /* =======================================================
@@ -375,13 +416,11 @@
     let center = Math.floor(slides.length / 2);
 
     function paint() {
-      slides.forEach((s, i) => s.classList.toggle(sideClass, i !== center));
-      const order = slides.map((s, i) => {
-        const d = i - center;
-        s.style.order = String(d);
-        return s;
+      slides.forEach((slide, i) => {
+        const distance = (i - center + slides.length + 1) % slides.length - 1;
+        slide.classList.toggle(sideClass, distance !== 0);
+        slide.style.order = String(distance);
       });
-      void order;
     }
 
     function move(step) {
@@ -434,7 +473,6 @@
   /* =======================================================
      КАЛЬКУЛЯТОР КАЛОРИЙ (Миффлин — Сан Жеор)
      ======================================================= */
-  const calcForm = $('#calcForm');
   const calcNum  = $('#calcNum');
   const calcCap  = $('#calcCap');
   const calcErr  = $('#calcErr');
@@ -444,10 +482,13 @@
 
   function recalc() {
     const [sex, height, act, age, weight, goal] = calcFields.map(f => f.value);
-    const ok = sex && act && goal && +height > 0 && +age > 0 && +weight > 0;
-
     calcFields.forEach(f => f.parentElement.classList.remove('is-err'));
-    if (!ok) { calcKcal = null; return false; }
+    if (calcFields.some(f => !f.validity.valid)) {
+      calcKcal = null;
+      calcNum.textContent = '0 ккал';
+      calcCap.textContent = 'Заполните поля для расчёта';
+      return false;
+    }
 
     const bmr = 10 * (+weight) + 6.25 * (+height) - 5 * (+age) + (sex === 'm' ? 5 : -161);
     const kcal = Math.round(bmr * (+act) * (1 + (+goal)) / 10) * 10;
@@ -463,11 +504,14 @@
     f.addEventListener('change', recalc);
   });
 
+  $('#calcForm').addEventListener('submit', e => e.preventDefault());
+
   $('#calcCta').addEventListener('click', () => {
     if (!recalc()) {
       calcErr.hidden = false;
-      calcFields.forEach(f => { if (!f.value) f.parentElement.classList.add('is-err'); });
-      calcFields.find(f => !f.value).focus();
+      const invalid = calcFields.filter(f => !f.validity.valid);
+      invalid.forEach(f => f.parentElement.classList.add('is-err'));
+      invalid[0].focus();
       return;
     }
     /* ближайшая по калорийности программа */
@@ -477,53 +521,7 @@
       if (diff < best.diff) best = { gi, pi, diff };
     }));
     selectProgram(best.gi, best.pi);
-    $('#menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-  /* =======================================================
-     ФОРМА ЗАЯВКИ
-     ======================================================= */
-  const orderForm = $('#orderForm');
-  const orderMsg  = $('#orderMsg');
-  const phone     = $('#ordPhone');
-
-  phone.addEventListener('input', () => {
-    let d = phone.value.replace(/\D/g, '');
-    if (d.startsWith('8')) d = '7' + d.slice(1);
-    if (!d.startsWith('7')) d = '7' + d;
-    d = d.slice(0, 11);
-    let out = '+7';
-    if (d.length > 1) out += ' (' + d.slice(1, 4);
-    if (d.length >= 5) out += ') ' + d.slice(4, 7);
-    if (d.length >= 8) out += '-' + d.slice(7, 9);
-    if (d.length >= 10) out += '-' + d.slice(9, 11);
-    phone.value = out;
-  });
-
-  orderForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = $('#ordName');
-    const goal = $('#ordGoal');
-    let bad = null;
-
-    [name, phone, goal].forEach(f => f.parentElement.classList.remove('is-err'));
-
-    if (name.value.trim().length < 2) bad = name;
-    else if (phone.value.replace(/\D/g, '').length < 11) bad = phone;
-    else if (!goal.value.trim()) bad = goal;
-
-    if (bad) {
-      bad.parentElement.classList.add('is-err');
-      bad.focus();
-      orderMsg.textContent = 'Проверьте заполнение поля';
-      orderMsg.className = 'order__msg is-err';
-      return;
-    }
-
-    /* TODO: подключить реальную отправку заявки (почта / CRM / Telegram-бот) */
-    orderMsg.textContent = 'Заявка принята — свяжемся с вами в ближайшее время';
-    orderMsg.className = 'order__msg is-ok';
-    orderForm.reset();
+    goToMenu();
   });
 
   /* =======================================================
@@ -553,15 +551,4 @@
     targets.forEach(el => io.observe(el));
   }
 
-  /* плавная прокрутка по якорям */
-  document.addEventListener('click', e => {
-    const a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    const id = a.getAttribute('href');
-    if (id === '#' || id.length < 2) return;
-    const target = $(id);
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
 })();
