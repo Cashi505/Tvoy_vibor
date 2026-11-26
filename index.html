@@ -84,12 +84,12 @@
       <ul class="hero__stats">
         <li class="stat">
           <span class="stat__top">от</span>
-          <b class="stat__num">790₽</b>
-          <span class="stat__cap">в день</span>
+          <b class="stat__num" id="heroTrialPrice">2 125₽</b>
+          <span class="stat__cap">за пробные 2 дня</span>
         </li>
         <li class="stat">
           <img class="stat__ic" src="assets/icons/ic-dish.svg" alt="" width="24" height="24" aria-hidden="true">
-          <b class="stat__num">5 блюд</b>
+          <b class="stat__num">до 5 блюд</b>
           <span class="stat__cap">на каждый день</span>
         </li>
         <li class="stat">
@@ -206,7 +206,7 @@
   <div class="container">
     <header class="sec__head">
       <h2 class="sec__title sec__title--green">Выберите меню</h2>
-      <p class="sec__lead">Каждая программа отличается калорийностью, составом блюд и задачей. Можно начать с 1 дня, 5 дней или полноценного месяца.</p>
+      <p class="sec__lead">Каждая программа отличается калорийностью, составом блюд и задачей. Варианты сроков и цены зависят от города.</p>
     </header>
 
     <div class="cfg" id="cfg">
@@ -224,9 +224,10 @@
       <div class="cfg__row">
         <p class="cfg__label">Число дней доставки</p>
         <div class="cfg__days" id="cfgDays"></div>
+        <p class="cfg__trial-terms" id="cfgTrialTerms">Пробная цена действует для новых клиентов и при перерыве в питании больше двух месяцев. Менеджер подтвердит сумму до оплаты.</p>
       </div>
 
-      <p class="cfg__total">Итого: <b id="cfgTotal">6 500₽</b></p>
+      <p class="cfg__total">Итого: <b id="cfgTotal" aria-live="polite">2 295₽</b></p>
 
       <a class="btn btn--primary cfg__submit" href="#order" id="cfgSubmit">
         Оформить заказ

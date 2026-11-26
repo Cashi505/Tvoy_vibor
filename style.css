@@ -332,7 +332,7 @@ input,select{font:inherit;color:inherit}
 /* =========================================================
    КОНФИГУРАТОР МЕНЮ
    ========================================================= */
-.menu{position:relative;padding:clamp(60px,8vw,115px) 0 0}
+.menu{position:relative;padding:clamp(60px,8vw,115px) 0 clamp(28px,5vw,80px)}
 .menu__deco{position:absolute;width:clamp(150px,24vw,404px);height:auto;object-fit:cover;pointer-events:none;z-index:0}
 .menu__deco--l{left:0;top:clamp(-20px,-1vw,0px);aspect-ratio:404/292}
 /* в макете фото уходит за правый край секции на 90px при ширине 1440 (узел
@@ -372,14 +372,6 @@ input,select{font:inherit;color:inherit}
 .chip.is-on{background:var(--green);border-color:var(--green);color:var(--white)}
 .chip.is-on span{color:rgba(255,255,255,.88)}
 
-.chip__sale{
-  position:absolute;top:-11px;right:-23px;
-  padding:4px 10px;border-radius:var(--r-pill);
-  background:var(--red);color:var(--white);
-  font-size:var(--fs-sm);font-weight:700;
-}
-.chip--kcal{position:relative}
-
 .cfg__row{
   padding:clamp(14px,2.08vw,30px) 0 clamp(15px,2.36vw,34px);
   border-bottom:1px solid var(--line);
@@ -410,19 +402,22 @@ input,select{font:inherit;color:inherit}
 .day-chip__off{padding:2px 5px;border-radius:6px;background:var(--red);color:var(--white);font-weight:700}
 .day-chip__price{font-size:var(--fs-h3);font-weight:800;line-height:1;letter-spacing:-.03em}
 .day-chip__per{font-size:var(--fs-sm);color:var(--ink-54)}
-.day-chip__note{font-size:var(--fs-sm);line-height:1.2;color:var(--ink-54);text-align:center}
 .day-chip__gift{
   position:absolute;left:50%;transform:translateX(-50%);bottom:-11px;
   padding:4px 12px;border-radius:var(--r-pill);
   background:var(--green);color:var(--white);
   font-size:11px;font-weight:600;white-space:nowrap;
 }
-.day-chip.is-on{background:var(--green);border-color:var(--green);color:var(--white)}
+.day-chip.is-on,.cfg__goals .chip.is-on,.cfg__meals .chip.is-on{background:#217525;border-color:#217525;color:var(--white)}
 .day-chip.is-on .day-chip__lab,
 .day-chip.is-on .day-chip__per,
-.day-chip.is-on .day-chip__note,
 .day-chip.is-on .day-chip__old s{color:rgba(255,255,255,.88)}
 .day-chip.is-on .day-chip__gift{background:var(--white);color:var(--green)}
+
+.cfg__trial-terms{
+  max-width:660px;margin:24px auto 0;padding:12px 16px;border-radius:12px;
+  background:#f1f8ed;color:#243428;text-align:left;font-size:var(--fs-body);
+}
 
 .cfg__total{margin-top:clamp(22px,4.31vw,62px);text-align:center;font-size:var(--fs-body);font-weight:500}
 .cfg__total b{font-weight:800}
@@ -900,7 +895,7 @@ input,select{font:inherit;color:inherit}
   .why__cta{display:flex;width:var(--m-btn);margin:57px auto 0}
 
   /* ---------- КОНФИГУРАТОР ---------- */
-  .menu{padding:39px 0 0}
+  .menu{padding:39px 0 32px}
   .menu .sec__title{max-width:374px}
   .menu .sec__lead{max-width:319px;margin-top:18px}
   .cfg{margin-top:42px}
@@ -914,7 +909,6 @@ input,select{font:inherit;color:inherit}
   /* в макете между строками чипа 28px, а не 23px */
   .chip{gap:8px}
   .chip--kcal{min-height:87px}
-  .chip__sale{top:-11px;right:-10px}
 
   .cfg__row{padding:38px 0 34px}
   /* в мобильном фрейме подпись строки конфигуратора 20px/700 */

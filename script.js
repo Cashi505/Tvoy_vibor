@@ -11,22 +11,18 @@
 
   /* =======================================================
      ДАННЫЕ ПРОГРАММ
-     Цены перенесены из прежней версии сайта.
-     Правится только здесь — вёрстка строится автоматически.
+     Тарифы на 26.11.2026, проверены в витрине WordPress.
+     Длительности, скидки и цены за день соответствуют тому, что видит покупатель.
      ======================================================= */
   const GOALS = [
     {
       name: 'Снижение веса',
       programs: [
         {
-          kcal: 900,  kcalLabel: '900 ккал',   name: 'Экспресс-фигура', sale: true, meals: 5,
-          prices: { 1: 1250, 5: 6000, 7: 8350, 14: 16300, 30: 34500 },
-          gift:   { 14: '2 дня в подарок' }
+          kcal: 900,  kcalLabel: '900 ккал',   name: 'Экспресс фигуры', meals: 5
         },
         {
-          kcal: 1400, kcalLabel: '1 400 ккал', name: 'Коррекция фигуры', meals: 5,
-          prices: { 1: 1300, 5: 6250, 7: 8650, 14: 16950, 30: 35900 },
-          gift:   { 14: '2 дня в подарок' }
+          kcal: 1400, kcalLabel: '1 400 ккал', name: 'Коррекция фигуры', meals: 5
         }
       ]
     },
@@ -34,9 +30,7 @@
       name: 'Не хочу готовить',
       programs: [
         {
-          kcal: 1200, kcalLabel: '1 200 ккал', name: '3-х разовое питание', meals: 3,
-          prices: { 1: 1150, 5: 5500, 7: 7650, 14: 15000, 30: 31200 },
-          gift:   { 14: '2 дня в подарок' }
+          kcal: 1200, kcalLabel: '1 200 ккал', name: 'Не хочу готовить', meals: 3
         }
       ]
     },
@@ -44,14 +38,10 @@
       name: 'Баланс',
       programs: [
         {
-          kcal: 1800, kcalLabel: '1 800 ккал', name: 'Будь в форме!', meals: 5,
-          prices: { 1: 1350, 5: 6500, 7: 9000, 14: 17600, 30: 37300 },
-          gift:   { 30: '6 дней в подарок' }
+          kcal: 1800, kcalLabel: '1 800 ккал', name: 'Будь в форме', meals: 5
         },
         {
-          kcal: 2200, kcalLabel: '2 200 ккал', name: 'Всегда в форме', meals: 5,
-          prices: { 1: 1450, 5: 7000, 7: 9650, 14: 18900, 30: 40000 },
-          gift:   { 30: '6 дней в подарок' }
+          kcal: 2200, kcalLabel: '2 200 ккал', name: 'Всегда в форме', meals: 5
         }
       ]
     },
@@ -59,20 +49,106 @@
       name: 'Набор массы',
       programs: [
         {
-          kcal: 3000, kcalLabel: '3 000 ккал', name: 'Масса', meals: 5,
-          prices: { 1: 1750, 5: 8500, 7: 11650, 14: 22800, 30: 48300 }
+          kcal: 3000, kcalLabel: '3 000 ккал', name: 'Набор массы', meals: 5
         }
       ]
     }
   ];
 
-  const TRIAL = { price: 790, note: 'Пробный рацион на 1 день' };
-  const DAYS  = [1, 5, 7, 14, 30];
+  const TARIFFS = {
+    'Сургут': {
+      900: [
+        { days: 2, price: 2295, trial: true },
+        { days: 5, price: 6500, old: 6750, daily: 1300, discount: 4 },
+        { days: 7, price: 9000, old: 9450, daily: 1285, discount: 5 },
+        { days: 14, price: 17550, old: 18900, daily: 1253, discount: 7, gift: 2 },
+        { days: 30, price: 37300, old: 40500, daily: 1243, discount: 8 },
+      ],
+      1200: [
+        { days: 2, price: 2125, trial: true },
+        { days: 5, price: 6000, old: 6250, daily: 1200, discount: 4 },
+        { days: 7, price: 8350, old: 8750, daily: 1193, discount: 5 },
+        { days: 14, price: 16300, old: 17500, daily: 1164, discount: 7, gift: 2 },
+        { days: 30, price: 34500, old: 37500, daily: 1150, discount: 8 },
+      ],
+      1400: [
+        { days: 2, price: 2465, trial: true },
+        { days: 5, price: 6750, old: 7000, daily: 1350, discount: 4 },
+        { days: 7, price: 9300, old: 9800, daily: 1328, discount: 5 },
+        { days: 14, price: 18300, old: 19600, daily: 1307, discount: 7, gift: 2 },
+        { days: 30, price: 38650, old: 42000, daily: 1288, discount: 8 },
+      ],
+      1800: [
+        { days: 2, price: 2720, trial: true },
+        { days: 5, price: 7000, old: 7250, daily: 1400, discount: 4 },
+        { days: 7, price: 9650, old: 10150, daily: 1379, discount: 5 },
+        { days: 14, price: 18900, old: 20300, daily: 1350, discount: 7 },
+        { days: 30, price: 40000, old: 43500, daily: 1333, discount: 8, gift: 6 },
+      ],
+      2200: [
+        { days: 2, price: 3060, trial: true },
+        { days: 5, price: 7450, old: 7750, daily: 1490, discount: 4 },
+        { days: 7, price: 10300, old: 10850, daily: 1471, discount: 5 },
+        { days: 14, price: 20200, old: 21700, daily: 1443, discount: 7 },
+        { days: 30, price: 42800, old: 46500, daily: 1427, discount: 8, gift: 6 },
+      ],
+      3000: [
+        { days: 2, price: 3400, trial: true },
+        { days: 5, price: 8900, old: 9250, daily: 1780, discount: 4 },
+        { days: 7, price: 12300, old: 12950, daily: 1757, discount: 5 },
+        { days: 14, price: 24100, old: 25900, daily: 1721, discount: 7 },
+        { days: 30, price: 51000, old: 55500, daily: 1700, discount: 8 },
+      ],
+    },
+    'Нефтеюганск': {
+      900: [
+        { days: 2, price: 2465, trial: true },
+        { days: 8, price: 10750, old: 11200, daily: 1344, discount: 5 },
+        { days: 14, price: 18300, old: 19600, daily: 1307, discount: 7, gift: 2 },
+        { days: 30, price: 38650, old: 42000, daily: 1288, discount: 8 },
+      ],
+      1200: [
+        { days: 2, price: 2295, trial: true },
+        { days: 8, price: 10000, old: 10400, daily: 1250, discount: 5 },
+        { days: 14, price: 17000, old: 18200, daily: 1214, discount: 7, gift: 2 },
+        { days: 30, price: 35900, old: 39000, daily: 1197, discount: 8 },
+      ],
+      1400: [
+        { days: 2, price: 2635, trial: true },
+        { days: 8, price: 11200, old: 11600, daily: 1400, discount: 5 },
+        { days: 14, price: 18900, old: 20300, daily: 1350, discount: 7, gift: 2 },
+        { days: 30, price: 40000, old: 43500, daily: 1333, discount: 8, gift: 6 },
+      ],
+      1800: [
+        { days: 2, price: 2890, trial: true },
+        { days: 8, price: 11900, old: 12400, daily: 1488, discount: 5 },
+        { days: 14, price: 20200, old: 21700, daily: 1443, discount: 7 },
+        { days: 30, price: 42800, old: 46500, daily: 1427, discount: 8 },
+      ],
+      2200: [
+        { days: 2, price: 3230, trial: true },
+        { days: 8, price: 12300, old: 12800, daily: 1538, discount: 5 },
+        { days: 14, price: 20900, old: 22400, daily: 1493, discount: 7 },
+        { days: 30, price: 44150, old: 48000, daily: 1472, discount: 8 },
+      ],
+      3000: [
+        { days: 2, price: 3655, trial: true },
+        { days: 8, price: 14600, old: 15200, daily: 1825, discount: 5 },
+        { days: 14, price: 24700, old: 26600, daily: 1764, discount: 7 },
+        { days: 30, price: 52400, old: 57000, daily: 1747, discount: 8 },
+      ],
+    },
+  };
 
-  /* по умолчанию — как в макете: Снижение веса → 900 ккал → 5 дней */
-  const state = { goal: 0, prog: 0, days: 5, trial: false };
+  const state = { city: 'Сургут', goal: 0, prog: 0, days: 2 };
 
   const currentProgram = () => GOALS[state.goal].programs[state.prog];
+  const currentTariffs = () => TARIFFS[state.city][currentProgram().kcal];
+  const selectedTariff = () => currentTariffs().find(tariff => tariff.days === state.days);
+
+  function resetDuration() {
+    state.days = currentTariffs()[currentProgram().kcal === 900 ? 0 : 1].days;
+  }
 
   /* =======================================================
      ШАПКА
@@ -112,21 +188,34 @@
     cityBtn.setAttribute('aria-expanded', String(!open));
     cityList.hidden = open;
   });
+  function selectCity(name) {
+    state.city = name;
+    cityName.textContent = name;
+    $$('[role="option"]', cityList).forEach(option => {
+      option.setAttribute('aria-selected', String(option.dataset.city === name));
+    });
+    const addresses = [name, ...Object.keys(ADDRESS).filter(city => city !== name)];
+    $('#ftrAddr').innerHTML = addresses.map(city =>
+      city === name ? '<b>' + ADDRESS[city] + '</b>' : ADDRESS[city]
+    ).join('<br>');
+    const trialPrices = Object.values(TARIFFS[name]).map(tariffs => tariffs[0].price);
+    $('#heroTrialPrice').textContent = money(Math.min(...trialPrices));
+    resetDuration();
+    renderCfg();
+  }
+
   cityList.addEventListener('click', e => {
     const btn = e.target.closest('[data-city]');
     if (!btn) return;
-    const name = btn.dataset.city;
-    cityName.textContent = name;
-    $$('[role="option"]', cityList).forEach(o => o.setAttribute('aria-selected', String(o === btn)));
-    const addr = $('#ftrAddr');
-    if (addr) {
-      addr.innerHTML = Object.keys(ADDRESS)
-        .sort(a => (a === name ? -1 : 1))
-        .map(k => (k === name ? '<b>' + ADDRESS[k] + '</b>' : ADDRESS[k]))
-        .join('<br>');
+    if (btn.dataset.city !== state.city) {
+      selectCity(btn.dataset.city);
+      const url = new URL(location.href);
+      url.searchParams.set('city', state.city);
+      history.replaceState(null, '', url);
     }
     cityBtn.setAttribute('aria-expanded', 'false');
     cityList.hidden = true;
+    cityBtn.focus({ preventScroll: true });
   });
   document.addEventListener('click', e => {
     if (!city.contains(e.target)) {
@@ -170,8 +259,8 @@
         <div class="cfgGoal__opts">
           ${g.programs.map((p, pi) => `
             <button class="chip chip--kcal${gi === state.goal && pi === state.prog ? ' is-on' : ''}"
-                    type="button" data-goal="${gi}" data-prog="${pi}">
-              ${p.sale ? '<span class="chip__sale">Акция!</span>' : ''}
+                    type="button" data-goal="${gi}" data-prog="${pi}" data-kcal="${p.kcal}"
+                    aria-pressed="${gi === state.goal && pi === state.prog}">
               <b>${p.kcalLabel}</b>
               <span>${p.name}</span>
             </button>`).join('')}
@@ -190,32 +279,25 @@
       </div>`;
   }
 
-  function renderDays() {
-    const prog = currentProgram();
-    const base = prog.prices[1];
-    let html = `
-      <button class="day-chip${state.trial ? ' is-on' : ''}" type="button" data-trial="1">
-        <span class="day-chip__price">${money(TRIAL.price)}</span>
-        <span class="day-chip__note">${TRIAL.note}</span>
-      </button>`;
+  function dayLabel(days) {
+    return days + ' ' + plural(days, 'день', 'дня', 'дней');
+  }
 
-    html += DAYS.map(d => {
-      const price = prog.prices[d];
-      const old   = base * d;
-      const off   = Math.round((1 - price / old) * 100);
-      const gift  = prog.gift && prog.gift[d];
-      const on    = !state.trial && state.days === d;
+  function renderDays() {
+    elDays.innerHTML = currentTariffs().map(tariff => {
+      const { days, price, old, discount, daily, gift, trial } = tariff;
+      const selected = state.days === days;
       return `
-        <button class="day-chip${on ? ' is-on' : ''}" type="button" data-days="${d}">
-          <span class="day-chip__lab">${d} ${plural(d, 'день', 'дня', 'дней')}</span>
-          ${off > 0 ? `<span class="day-chip__old"><s>${money(old)}</s><i class="day-chip__off">-${off}%</i></span>` : ''}
+        <button class="day-chip${selected ? ' is-on' : ''}" type="button"
+                data-days="${days}" aria-pressed="${selected}">
+          <span class="day-chip__lab">${trial ? 'Пробные 2 дня' : dayLabel(days)}</span>
+          ${trial ? '<span class="day-chip__off">−15%</span>' : ''}
+          ${old ? `<span class="day-chip__old"><s>${money(old)}</s>${discount ? `<i class="day-chip__off">-${discount}%</i>` : ''}</span>` : ''}
           <span class="day-chip__price">${money(price)}</span>
-          ${d > 1 ? `<span class="day-chip__per">${money(Math.round(price / d))}/день</span>` : ''}
-          ${gift ? `<span class="day-chip__gift">${gift}</span>` : ''}
+          ${daily ? `<span class="day-chip__per">${money(daily)}/день</span>` : ''}
+          ${gift ? `<span class="day-chip__gift">+${dayLabel(gift)} в подарок</span>` : ''}
         </button>`;
     }).join('');
-
-    elDays.innerHTML = html;
   }
 
   function plural(n, one, few, many) {
@@ -226,8 +308,7 @@
   }
 
   function renderTotal() {
-    const total = state.trial ? TRIAL.price : currentProgram().prices[state.days];
-    elTotal.textContent = money(total);
+    elTotal.textContent = money(selectedTariff().price);
   }
 
   function renderCfg() {
@@ -237,48 +318,50 @@
     renderTotal();
   }
 
+  function selectProgram(goal, program) {
+    state.goal = goal;
+    state.prog = program;
+    resetDuration();
+    renderCfg();
+  }
+
   elGoals.addEventListener('click', e => {
     const btn = e.target.closest('[data-goal]');
     if (!btn) return;
-    state.goal = +btn.dataset.goal;
-    state.prog = +btn.dataset.prog;
-    if (!currentProgram().prices[state.days]) state.days = 5;
-    renderCfg();
+    selectProgram(+btn.dataset.goal, +btn.dataset.prog);
+    $(`[data-kcal="${currentProgram().kcal}"]`, elGoals).focus({ preventScroll: true });
   });
 
   elDays.addEventListener('click', e => {
-    const btn = e.target.closest('[data-days],[data-trial]');
+    const btn = e.target.closest('[data-days]');
     if (!btn) return;
-    if (btn.dataset.trial) {
-      state.trial = true;
-    } else {
-      state.trial = false;
-      state.days = +btn.dataset.days;
-    }
-    renderDays();
+    state.days = +btn.dataset.days;
+    $$('[data-days]', elDays).forEach(option => {
+      const selected = option === btn;
+      option.classList.toggle('is-on', selected);
+      option.setAttribute('aria-pressed', String(selected));
+    });
     renderTotal();
   });
 
-  renderCfg();
+  const requestedCity = new URLSearchParams(location.search).get('city');
+  selectCity(Object.hasOwn(TARIFFS, requestedCity) ? requestedCity : state.city);
 
   /* кнопки «Подобрать программу» на карточках целей */
   $$('.goal__btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.goal = +btn.dataset.goal;
-      state.prog = 0;
-      state.trial = false;
-      if (!currentProgram().prices[state.days]) state.days = 5;
-      renderCfg();
+      selectProgram(+btn.dataset.goal, 0);
       $('#menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
   /* перенос выбора в форму заявки */
   $('#cfgSubmit').addEventListener('click', () => {
-    const p = currentProgram();
-    const days = state.trial ? 'пробный день' : state.days + ' ' + plural(state.days, 'день', 'дня', 'дней');
-    const goalField = $('#ordGoal');
-    if (goalField) goalField.value = `${GOALS[state.goal].name} — ${p.kcalLabel}, ${days}`;
+    const program = currentProgram();
+    const tariff = selectedTariff();
+    const duration = tariff.trial ? 'Пробные 2 дня' : dayLabel(tariff.days);
+    const gift = tariff.gift ? ` (+${dayLabel(tariff.gift)} в подарок)` : '';
+    $('#ordGoal').value = `${state.city}, ${program.name}, ${program.kcalLabel}, ${duration}${gift}, ${money(tariff.price)}`;
   });
 
   /* =======================================================
@@ -393,11 +476,7 @@
       const diff = Math.abs(p.kcal - calcKcal);
       if (diff < best.diff) best = { gi, pi, diff };
     }));
-    state.goal = best.gi;
-    state.prog = best.pi;
-    state.trial = false;
-    if (!currentProgram().prices[state.days]) state.days = 5;
-    renderCfg();
+    selectProgram(best.gi, best.pi);
     $('#menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
