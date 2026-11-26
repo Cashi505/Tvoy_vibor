@@ -551,4 +551,65 @@
     targets.forEach(el => io.observe(el));
   }
 
+  /* =======================================================
+     COOKIE-УВЕДОМЛЕНИЕ
+     ======================================================= */
+  const cookieBanner = $('#cookieBanner');
+  const cookieAccept = $('#cookieAccept');
+  if (cookieBanner && cookieAccept) {
+    let accepted = false;
+    try { accepted = localStorage.getItem('tv_cookie_ok') === '1'; } catch (_) {}
+    if (!accepted) cookieBanner.hidden = false;
+    cookieAccept.addEventListener('click', () => {
+      cookieBanner.hidden = true;
+      try { localStorage.setItem('tv_cookie_ok', '1'); } catch (_) {}
+    });
+  }
+
+  /* =======================================================
+     АНАЛИТИКА БОЕВОГО ДОМЕНА (Метрика, click.ru, Calltouch)
+     Запускается строго на vibiraiedu.ru после load, чтобы не
+     засорять рабочую статистику проверками на превью и стендах.
+     ======================================================= */
+  function initProductionAnalytics() {
+    const host = location.hostname.toLowerCase();
+    if (host !== 'vibiraiedu.ru' && host !== 'www.vibiraiedu.ru') return;
+
+    const loadScript = src => {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = src;
+      document.head.appendChild(s);
+    };
+
+    const startDeferred = () => {
+      setTimeout(() => {
+        window.ym = window.ym || function () { (window.ym.a = window.ym.a || []).push(arguments); };
+        window.ym.l = 1 * new Date();
+        loadScript('https://mc.yandex.ru/metrika/tag.js');
+        window.ym(92464363, 'init', {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true
+        });
+        loadScript('https://af.click.ru/af.js?id=13206');
+      }, 1000);
+
+      setTimeout(() => {
+        window.CalltouchDataObject = 'ct';
+        window.ct = window.ct || function () { (window.ct.callbacks = window.ct.callbacks || []).push(arguments); };
+        window.ct.loaded = false;
+        window.ct.counters = ['uct7jyrx'];
+        const modern = typeof Array.prototype.find === 'function';
+        loadScript('https://mod.calltouch.ru/' + (modern ? 'init-min.js' : 'init.js') + '?id=uct7jyrx');
+      }, 1500);
+    };
+
+    if (document.readyState === 'complete') startDeferred();
+    else window.addEventListener('load', startDeferred, { once: true });
+  }
+
+  initProductionAnalytics();
+
 })();
