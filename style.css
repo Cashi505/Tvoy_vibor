@@ -1057,6 +1057,114 @@ input,select{font:inherit;color:inherit}
 
 }
 
+/* =========================================================
+   АДАПТИВ — исправление широких мобильных и планшета
+   ========================================================= */
+@media (min-width:430px) and (max-width:599px){
+  :root{--m-card:310px}
+}
+
+@media (min-width:480px) and (max-width:900px){
+  .gift{min-height:0;overflow:hidden;padding-bottom:28px}
+  .gift__pic{position:static;left:auto;top:auto;width:min(440px,88%);max-width:100%;margin:24px auto 0}
+  .calc{padding-top:64px}
+}
+
+@media (min-width:600px) and (max-width:1024px){
+  .goals__grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:24px;width:100%;max-width:760px;margin:40px auto 0;
+  }
+  .goal,
+  .goal:nth-child(2),
+  .goal:nth-child(3),
+  .goal:nth-child(4){
+    margin-top:0;min-height:0;padding:24px 20px 26px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+  }
+  .goal__pic{
+    position:static;width:100%;height:220px;
+    display:flex;align-items:flex-end;justify-content:center;
+    margin-bottom:18px;overflow:hidden;
+  }
+  .goal:nth-child(n) .goal__pic img{
+    position:static;left:auto;top:auto;transform:none;
+    width:auto;max-width:100%;max-height:100%;height:auto;object-fit:contain;
+  }
+  .goal__title,.goal__text{max-width:100%}
+  .goal__text{margin-bottom:20px}
+  .goal__btn{margin-top:auto;width:100%;max-width:240px}
+
+  .why__grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:24px;width:100%;max-width:820px;margin:40px auto 0;
+  }
+  .why__card,
+  .why__card:nth-child(2),
+  .why__card:nth-child(3),
+  .why__card:nth-child(4){
+    margin-top:0;min-height:0;padding:24px 20px 26px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+  }
+  .why__pic{
+    position:static;width:100%;height:170px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;
+  }
+  .why__pic img,
+  .why__card:nth-child(n) .why__pic img{
+    position:static;left:auto;top:auto;
+    width:auto;max-width:100%;max-height:100%;height:auto;object-fit:contain;
+  }
+  .why__card p{max-width:280px;margin-inline:auto}
+}
+
+@media (min-width:600px) and (max-width:900px){
+  .fresh{min-height:0;padding:36px 24px}
+  .fresh__title{padding-inline:0;text-align:left}
+  .fresh__tags{position:static;display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;pointer-events:auto}
+  .fresh__tags li{position:static}
+  .fresh__tags li:nth-child(odd){transform:rotate(-4deg)}
+  .fresh__tags li:nth-child(even){transform:rotate(3deg)}
+}
+
+@media (min-width:700px) and (max-width:1024px){
+  .hero{padding-top:24px}
+  .hero__in{
+    display:grid;
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    gap:24px;align-items:start;
+  }
+  .hero__col{display:block}
+  .hero__since{display:none}
+  .hero__title,.hero__marks,.hero__lead,.hero__cta{text-align:left;margin-inline:0}
+  .hero__title{font-size:clamp(36px,4.5vw,48px)}
+  .hero__marks{justify-content:flex-start;margin-top:18px;font-size:clamp(15px,1.8vw,18px)}
+  .hero__lead{max-width:480px;margin-top:18px;font-size:clamp(16px,1.9vw,18px)}
+  .hero__cta{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}
+  .hero__cta .btn{width:auto;min-width:0;padding:0 20px}
+  .hero__stats{
+    order:initial;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;margin:24px 0 0;max-width:420px;
+  }
+  .stat{min-height:108px;padding:12px 14px 14px}
+  .stat__cap{max-width:none}
+  .hero__art{order:initial;width:auto;max-width:none;margin:0 calc(-1 * var(--pad)) 0 0}
+  .hero__panel{
+    width:100%;max-width:460px;margin:0 0 0 auto;
+    aspect-ratio:665/872;border-radius:72px 0 0 72px;
+  }
+  .hero__ph--tuna   {left:4.5%;  top:-2%;  width:54%}
+  .hero__ph--oat    {left:57%;   top:-7%;  width:49%}
+  .hero__ph--pasta  {left:55%;   top:27%;  width:53%}
+  .hero__ph--chicken{left:4.5%;  top:37%;  width:53%}
+  .hero__ph--lasagna{left:60%;   top:58%;  width:38%}
+  .hero__badge{
+    left:7%;right:auto;top:auto;bottom:14px;z-index:2;
+    padding:6px 10px;border-radius:12px;background:rgba(49,165,51,.92);
+  }
+}
+
 @media (max-width:420px){
   .day-chip{width:100%}
 }
