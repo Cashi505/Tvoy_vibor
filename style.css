@@ -665,7 +665,9 @@ input,select{font:inherit;color:inherit}
 .order__lead{margin-top:clamp(13px,1.94vw,28px);max-width:642px;font-size:var(--fs-lead);color:rgba(255,255,255,.82)}
 .order__col{position:relative;z-index:1}
 .order__summary{max-width:40rem;margin-top:18px;font-weight:700}
-.order__channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.order__actions{margin-top:24px}
+.order__actions .btn{min-width:min(289px, 100%)}
+.order__channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .order__channels .btn{min-height:44px;padding-inline:18px}
 .order__call{display:inline-block;margin-top:16px;padding-block:8px;text-decoration:underline}
 .order__pic{position:absolute;right:calc(-1 * var(--bleed) - clamp(36px,5.49vw,79px));top:calc(-1 * clamp(49px,11.3vw,163px));width:min(825px,57.3vw);max-width:none;pointer-events:none}
@@ -1207,4 +1209,210 @@ input,select{font:inherit;color:inherit}
     gap:12px;
   }
   .cookie__btn{width:100%}
+}
+
+/* =========================================================
+   МОДАЛЬНОЕ ОКНО ЗАЯВКИ
+   ========================================================= */
+body.is-modal-open{overflow:hidden}
+.modal[hidden]{display:none}
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:grid;
+  place-items:center;
+  padding:16px;
+}
+.modal__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(26,26,26,.58);
+  backdrop-filter:blur(3px);
+}
+.modal__dialog{
+  position:relative;
+  z-index:1;
+  width:min(540px, 100%);
+  max-height:calc(100vh - 32px);
+  max-height:calc(100dvh - 32px);
+  overflow-y:auto;
+  padding:32px 28px 28px;
+  background:var(--white);
+  color:var(--ink);
+  border-radius:var(--r-big);
+  box-shadow:0 24px 64px rgba(0,0,0,.22);
+}
+.modal__close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-size:28px;
+  line-height:1;
+  color:var(--ink-54);
+  transition:background-color .2s var(--ease), color .2s var(--ease);
+}
+.modal__close:hover{background:rgba(26,26,26,.06);color:var(--ink)}
+.modal__title{
+  padding-right:40px;
+  font-size:clamp(24px, 3vw, 32px);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+.modal__sub{
+  margin-top:8px;
+  font-size:14px;
+  color:var(--ink-54);
+  line-height:1.4;
+}
+.modal__summary{
+  margin-top:16px;
+  padding:14px 16px;
+  border-radius:16px;
+  background:#f1f8ed;
+  border:1px solid rgba(49,165,51,.22);
+  font-size:14px;
+  line-height:1.4;
+}
+.modal__summary strong{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+.modal__summary .modal__summary-price{
+  display:inline-block;
+  margin-top:6px;
+  font-size:20px;
+  font-weight:800;
+  color:var(--green-dark);
+}
+.modal__summary .modal__summary-note{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:#243428;
+}
+.modal__form{
+  display:grid;
+  gap:14px;
+  margin-top:18px;
+}
+.modal__form[hidden]{display:none}
+.modal__hp{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.mfield{display:grid;gap:6px}
+.mfield[hidden]{display:none}
+.mfield--radios{border:0;padding:0;margin:0}
+.mfield__lab{font-size:13px;font-weight:600;color:var(--ink)}
+.mfield input[type="text"],
+.mfield input[type="tel"],
+.mfield select,
+.mfield textarea{
+  width:100%;
+  min-height:48px;
+  padding:10px 18px;
+  background:var(--white);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:16px;
+  font:inherit;
+  font-size:15px;
+  transition:border-color .2s var(--ease);
+}
+.mfield select{
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  padding-right:44px;
+  background-image:url('assets/icons/chevron-select.svg');
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  background-size:22px 22px;
+  cursor:pointer;
+}
+.mfield textarea{min-height:76px;resize:vertical}
+.mfield input:focus,
+.mfield select:focus,
+.mfield textarea:focus{outline:none;border-color:var(--green)}
+.mfield.is-err input,
+.mfield.is-err select,
+.mfield.is-err textarea{border-color:var(--red)}
+.mfield__hint{font-size:12px;color:var(--ink-54)}
+.mfield__pills{display:flex;flex-wrap:wrap;gap:8px}
+.mpill{position:relative;cursor:pointer}
+.mpill input{position:absolute;opacity:0;pointer-events:none}
+.mpill span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 16px;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  font-size:14px;
+  font-weight:500;
+  transition:background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.mpill input:checked + span{
+  background:var(--green);
+  border-color:var(--green);
+  color:var(--white);
+}
+.mpill input:focus-visible + span{outline:2px solid var(--green);outline-offset:2px}
+.mcheck{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:13px;
+  line-height:1.35;
+  color:var(--ink-54);
+  cursor:pointer;
+}
+.mcheck input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--green)}
+.mcheck a{color:var(--green-dark);text-decoration:underline;text-underline-offset:.2em}
+.mcheck.is-err{color:var(--red)}
+.modal__err{
+  padding:10px 14px;
+  border-radius:12px;
+  background:#fdecec;
+  color:var(--red);
+  font-size:13px;
+  font-weight:500;
+}
+.modal__err[hidden]{display:none}
+.modal__submit{width:100%;margin-top:4px}
+.modal__submit:disabled{opacity:.65;cursor:not-allowed;transform:none}
+.modal__state{
+  margin-top:18px;
+  display:grid;
+  gap:14px;
+}
+.modal__state[hidden]{display:none}
+.modal__state-box{
+  padding:18px;
+  border-radius:18px;
+  background:#f1f8ed;
+  border:1px solid rgba(49,165,51,.25);
+  font-size:15px;
+  line-height:1.45;
+}
+.modal__state-box--preview{
+  background:#fff8eb;
+  border-color:rgba(217,140,0,.35);
+}
+.modal__state-box h3{font-size:20px;font-weight:800;margin-bottom:6px;color:var(--ink)}
+.modal__state-meta{margin-top:8px;font-size:13px;color:var(--ink-54)}
+.modal__state-channels{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.modal__state-channels .btn{min-height:42px;padding:0 16px;font-size:14px}
+
+@media (max-width:600px){
+  .modal{padding:12px}
+  .modal__dialog{padding:24px 18px 22px;border-radius:24px}
 }

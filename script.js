@@ -384,26 +384,403 @@
     });
   });
 
+  function isProductionHost() {
+    const host = location.hostname.toLowerCase();
+    return host === 'vibiraiedu.ru' || host === 'www.vibiraiedu.ru';
+  }
+
   function showOrderSummary(text) {
     const summary = $('#orderSummary');
     summary.textContent = text;
     summary.hidden = !text;
   }
 
+  /* =======================================================
+     МОДАЛЬНАЯ ФОРМА ЗАЯВКИ (заказ, пробник, сертификат, КП, связь)
+     ======================================================= */
+  const leadModal = $('#leadModal');
+  const leadForm = $('#leadForm');
+  const leadModalTitle = $('#leadModalTitle');
+  const leadModalSub = $('#leadModalSub');
+  const leadModalSummary = $('#leadModalSummary');
+  const leadModalState = $('#leadModalState');
+  const leadFormErr = $('#leadFormErr');
+  const leadFormSubmit = $('#leadFormSubmit');
+  const leadFormSubmitText = $('#leadFormSubmitText');
+  const lfType = $('#lfType');
+  const lfRequestType = $('#lfRequestType');
+  const lfKcal = $('#lfKcal');
+  const lfDays = $('#lfDays');
+  const lfStartedAt = $('#lfStartedAt');
+  const lfCityWrap = $('#lfCityWrap');
+  const lfCity = $('#lfCity');
+  const lfName = $('#lfName');
+  const lfPhone = $('#lfPhone');
+  const lfAddressWrap = $('#lfAddressWrap');
+  const lfAddress = $('#lfAddress');
+  const lfPromoWrap = $('#lfPromoWrap');
+  const lfPromo = $('#lfPromo');
+  const lfCommentWrap = $('#lfCommentWrap');
+  const lfCommentLabel = $('#lfCommentLabel');
+  const lfComment = $('#lfComment');
+  const lfConsentWrap = $('#lfConsentWrap');
+  const lfConsent = $('#lfConsent');
+  const lfWebsite = $('#lfWebsite');
+
+  let lastFocusBeforeModal = null;
+
+  function formatPhoneMask(raw) {
+    let digits = String(raw || '').replace(/\D/g, '');
+    if (!digits) return '';
+    if (digits[0] === '8') digits = '7' + digits.slice(1);
+    else if (digits[0] === '9') digits = '7' + digits;
+    else if (digits[0] !== '7') digits = '7' + digits;
+    digits = digits.slice(0, 11);
+    let res = '+7';
+    if (digits.length > 1) res += ' (' + digits.slice(1, 4);
+    if (digits.length >= 4) res += ')';
+    if (digits.length > 4) res += ' ' + digits.slice(4, 7);
+    if (digits.length > 7) res += '-' + digits.slice(7, 9);
+    if (digits.length > 9) res += '-' + digits.slice(9, 11);
+    return res;
+  }
+
+  function phoneDigits(raw) {
+    let digits = String(raw || '').replace(/\D/g, '');
+    if (digits.length === 10 && digits[0] === '9') digits = '7' + digits;
+    if (digits.length === 11 && digits[0] === '8') digits = '7' + digits.slice(1);
+    return digits;
+  }
+
+  function clearLeadErrors() {
+    leadFormErr.hidden = true;
+    leadFormErr.textContent = '';
+    $$('.is-err', leadForm).forEach(el => el.classList.remove('is-err'));
+  }
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function openLeadModal(mode) {
+    if (!leadModal || !leadForm) return;
+    lastFocusBeforeModal = document.activeElement;
+    clearLeadErrors();
+    leadForm.hidden = false;
+    leadModalState.hidden = true;
+    leadModalState.innerHTML = '';
+    leadFormSubmit.disabled = false;
+    lfWebsite.value = '';
+    lfStartedAt.value = String(Date.now());
+    lfCity.value = state.city;
+
+    const isOrderMode = mode === 'order' || mode === 'trial';
+    lfType.value = mode;
+    lfRequestType.value = mode === 'business_quote' ? 'business_quote' : '';
+
+    if (isOrderMode) {
+      const program = currentProgram();
+      const tariff = selectedTariff();
+      const isTrial = Boolean(tariff.trial);
+      lfType.value = isTrial ? 'trial' : 'order';
+      lfKcal.value = String(program.kcal);
+      lfDays.value = String(tariff.days);
+
+      const duration = isTrial ? 'Пробные 2 дня -15%' : dayLabel(tariff.days);
+      const gift = tariff.gift ? ` (+${dayLabel(tariff.gift)} в подарок)` : '';
+      const summaryLine = `${state.city}, ${program.name}, ${program.kcalLabel}, ${duration}${gift}, ${money(tariff.price)}`;
+      showOrderSummary(summaryLine);
+
+      leadModalTitle.textContent = isTrial ? 'Пробный заказ на 2 дня' : 'Оформление заказа';
+      leadModalSub.textContent = 'Менеджер свяжется с вами в течение 60 минут (ежедневно с 9:00 до 23:00).';
+      leadModalSummary.hidden = false;
+      leadModalSummary.innerHTML = `
+        <strong>${escapeHtml(program.name)} (${escapeHtml(program.kcalLabel)})</strong>
+        <div>${escapeHtml(state.city)} &middot; ${escapeHtml(duration + gift)}</div>
+        <span class="modal__summary-price">${escapeHtml(money(tariff.price))}</span>
+        ${isTrial ? '<span class="modal__summary-note">Пробная цена действует для новых клиентов и при перерыве больше 2 месяцев. Менеджер подтвердит сумму до оплаты после проверки в 1С.</span>' : ''}
+      `;
+      lfCityWrap.hidden = true;
+      lfAddressWrap.hidden = false;
+      lfAddress.required = true;
+      lfPromoWrap.hidden = false;
+      lfCommentWrap.hidden = true;
+      leadFormSubmitText.textContent = 'Оформить заказ';
+    } else {
+      lfKcal.value = '';
+      lfDays.value = '';
+      lfCityWrap.hidden = false;
+      lfAddressWrap.hidden = true;
+      lfAddress.required = false;
+      lfPromoWrap.hidden = true;
+      lfCommentWrap.hidden = false;
+      leadModalSummary.hidden = true;
+      leadModalSummary.innerHTML = '';
+
+      if (mode === 'business_quote') {
+        leadModalTitle.textContent = 'Запрос коммерческого предложения';
+        leadModalSub.textContent = 'Подготовим предложение для офиса, спортклуба или мероприятия. На связи ежедневно с 9:00 до 23:00.';
+        lfCommentLabel.textContent = 'Компания и детали запроса (необязательно)';
+        lfComment.placeholder = 'Сколько человек, формат питания или дата мероприятия';
+        leadFormSubmitText.textContent = 'Получить КП';
+        showOrderSummary(`${state.city}, Запрос коммерческого предложения`);
+      } else if (mode === 'certificate') {
+        leadModalTitle.textContent = 'Подарочный сертификат';
+        leadModalSub.textContent = 'Сертификат на любой номинал от 1 250 ₽, действует 3 месяца. Отправим в мессенджер сразу после оформления.';
+        lfCommentLabel.textContent = 'Номинал или программа (необязательно)';
+        lfComment.placeholder = 'Например: 5 000 ₽ или программа 1 400 ккал на 5 дней';
+        leadFormSubmitText.textContent = 'Оформить сертификат';
+        showOrderSummary(`${state.city}, Подарочный сертификат`);
+      } else {
+        leadModalTitle.textContent = 'Оставить заявку';
+        leadModalSub.textContent = 'Поможем подобрать рацион и согласуем график доставки. На связи ежедневно с 9:00 до 23:00.';
+        lfCommentLabel.textContent = 'Ваш вопрос (необязательно)';
+        lfComment.placeholder = 'Напишите, что подсказать';
+        leadFormSubmitText.textContent = 'Отправить заявку';
+        showOrderSummary(`${state.city}, Вопрос о питании или доставке`);
+      }
+    }
+
+    leadModal.hidden = false;
+    document.body.classList.add('is-modal-open');
+    setTimeout(() => {
+      (isOrderMode ? lfName : lfCity).focus({ preventScroll: true });
+    }, 30);
+  }
+
+  function closeLeadModal() {
+    if (!leadModal || leadModal.hidden) return;
+    leadModal.hidden = true;
+    document.body.classList.remove('is-modal-open');
+    if (lastFocusBeforeModal && typeof lastFocusBeforeModal.focus === 'function') {
+      lastFocusBeforeModal.focus({ preventScroll: true });
+    }
+  }
+
+  function fireProductionLeadTracking(payload, result) {
+    if (!isProductionHost()) return;
+    const isOrder = payload.type === 'order' || payload.type === 'trial';
+    try {
+      if (typeof window.ym === 'function') {
+        window.ym(92464363, 'reachGoal', isOrder ? 'Zakaz' : 'O-Svyaz');
+      }
+    } catch (_) {}
+
+    try {
+      const ctParams = new URLSearchParams();
+      ctParams.set('fio', payload.name);
+      ctParams.set('phoneNumber', payload.phone);
+      ctParams.set('comment', isOrder ? payload.address : (payload.comment || result.summary || payload.city));
+      ctParams.set('subject', payload.type === 'business_quote' ? 'Запрос КП с сайта' : 'Заявка');
+      ctParams.set('requestUrl', location.href);
+      if (window.call_value) ctParams.set('sessionId', String(window.call_value));
+
+      fetch('https://api.calltouch.ru/calls-service/RestAPI/requests/54497/register/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: ctParams.toString(),
+        mode: 'no-cors',
+        keepalive: true
+      }).catch(() => {});
+    } catch (_) {}
+  }
+
+  function collectUtm() {
+    const params = new URLSearchParams(location.search);
+    const utm = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'yclid', 'gclid'].forEach(key => {
+      const val = params.get(key);
+      if (val) utm[key] = val;
+    });
+    utm.source_url = location.href;
+    return utm;
+  }
+
+  function showLeadSuccess(data, payload) {
+    leadForm.hidden = true;
+    leadModalState.hidden = false;
+    const title = (payload.type === 'order' || payload.type === 'trial') ? 'Спасибо за заказ!' : 'Спасибо за запрос!';
+    leadModalState.innerHTML = `
+      <div class="modal__state-box">
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(data.message || 'Менеджер свяжется с вами в рабочее время с 9:00 до 23:00.')}</p>
+        ${data.summary ? `<p class="modal__state-meta">${escapeHtml(data.summary)}</p>` : ''}
+        ${data.orderId ? `<p class="modal__state-meta">Номер заявки: ${escapeHtml(data.orderId)}</p>` : ''}
+      </div>
+      <button class="btn btn--primary modal__submit" type="button" data-modal-close>Готово</button>
+    `;
+  }
+
+  function showPreviewFallback(payload) {
+    leadForm.hidden = true;
+    leadModalState.hidden = false;
+    leadModalState.innerHTML = `
+      <div class="modal__state-box modal__state-box--preview">
+        <h3>Демонстрационное превью</h3>
+        <p>Серверный обработчик заявок работает на основном хостинге Beget (vibiraiedu.ru). На статическом превью Vercel заявки не отправляются.</p>
+        <p class="modal__state-meta">Для оформления сейчас выберите удобный канал связи:</p>
+        <div class="modal__state-channels">
+          <a class="btn btn--primary" target="_blank" rel="noopener" href="https://t.me/tvoivibor86">Telegram</a>
+          <a class="btn btn--ghost" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=79026909192">WhatsApp</a>
+          <a class="btn btn--ghost" target="_blank" rel="noopener" href="https://max.ru/u/f9LHodD0cOKBiwwO8ZmB5mFTm1brSR5f_rtA6RkVhMMDr-h_zGhriRjhoVQ">MAX</a>
+          <a class="btn btn--ghost" href="tel:+79026909192">8 (902) 690-91-92</a>
+        </div>
+      </div>
+      <button class="btn btn--ghost modal__submit" type="button" data-modal-close>Закрыть</button>
+    `;
+  }
+
+  if (lfPhone) {
+    lfPhone.addEventListener('input', () => {
+      lfPhone.value = formatPhoneMask(lfPhone.value);
+    });
+  }
+
+  if (leadModal) {
+    leadModal.addEventListener('click', e => {
+      if (e.target.closest('[data-modal-close]')) closeLeadModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !leadModal.hidden) closeLeadModal();
+    });
+  }
+
+  if (leadForm) {
+    leadForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      clearLeadErrors();
+
+      const type = lfType.value;
+      const isOrderMode = type === 'order' || type === 'trial';
+      const cityVal = isOrderMode ? state.city : lfCity.value;
+      const nameVal = lfName.value.trim();
+      const phoneVal = lfPhone.value.trim();
+      const addressVal = lfAddress.value.trim();
+      const contactRadio = $('input[name="contact_method"]:checked', leadForm);
+      const contactVal = contactRadio ? contactRadio.value : 'Звонок';
+      const consentVal = lfConsent.checked;
+
+      const badFields = [];
+      if (nameVal.length < 2) badFields.push(lfName.closest('.mfield'));
+      if (phoneDigits(phoneVal).length !== 11 || phoneDigits(phoneVal)[0] !== '7') badFields.push(lfPhone.closest('.mfield'));
+      if (isOrderMode && addressVal.length < 5) badFields.push(lfAddress.closest('.mfield'));
+      if (!consentVal) badFields.push(lfConsentWrap);
+
+      if (badFields.length) {
+        badFields.forEach(el => el && el.classList.add('is-err'));
+        leadFormErr.textContent = 'Проверьте заполнение отмеченных полей и согласие с политикой.';
+        leadFormErr.hidden = false;
+        const firstInput = $('input,select,textarea', badFields[0]);
+        if (firstInput) firstInput.focus();
+        return;
+      }
+
+      const payload = Object.assign({
+        type,
+        request_type: lfRequestType.value,
+        city: cityVal,
+        name: nameVal,
+        phone: formatPhoneMask(phoneVal),
+        contact_method: contactVal,
+        address: isOrderMode ? addressVal : '',
+        promocode: isOrderMode ? lfPromo.value.trim() : '',
+        comment: isOrderMode ? '' : lfComment.value.trim(),
+        kcal: isOrderMode ? Number(lfKcal.value) : 0,
+        days: isOrderMode ? Number(lfDays.value) : 0,
+        consent: true,
+        website: lfWebsite.value,
+        form_started_at: Number(lfStartedAt.value) || 0
+      }, collectUtm());
+
+      const prevBtnText = leadFormSubmitText.textContent;
+      leadFormSubmit.disabled = true;
+      leadFormSubmitText.textContent = 'Отправляем...';
+
+      const controller = new AbortController();
+      const timerId = setTimeout(() => controller.abort(), 15000);
+
+      try {
+        const resp = await fetch('/api/order.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timerId);
+
+        if ((resp.status === 404 || resp.status === 405) && !isProductionHost()) {
+          showPreviewFallback(payload);
+          return;
+        }
+
+        let data = null;
+        try { data = await resp.json(); } catch (_) {}
+
+        if (resp.ok && data && data.ok) {
+          fireProductionLeadTracking(payload, data);
+          showLeadSuccess(data, payload);
+          leadForm.reset();
+          return;
+        }
+
+        if (data && data.fields) {
+          const map = {
+            city: lfCityWrap,
+            name: lfName.closest('.mfield'),
+            phone: lfPhone.closest('.mfield'),
+            address: lfAddressWrap,
+            consent: lfConsentWrap
+          };
+          Object.keys(data.fields).forEach(k => {
+            if (map[k]) map[k].classList.add('is-err');
+          });
+        }
+        leadFormErr.textContent = (data && data.error)
+          ? data.error
+          : 'Не удалось отправить заявку. Попробуйте еще раз или позвоните 8 (902) 690-91-92.';
+        leadFormErr.hidden = false;
+      } catch (err) {
+        clearTimeout(timerId);
+        leadFormErr.textContent = (err && err.name === 'AbortError')
+          ? 'Сервер отвечает слишком долго. Попробуйте еще раз или напишите в Telegram / WhatsApp / MAX.'
+          : 'Ошибка сети при отправке заявки. Попробуйте еще раз или позвоните 8 (902) 690-91-92.';
+        leadFormErr.hidden = false;
+      } finally {
+        leadFormSubmit.disabled = false;
+        leadFormSubmitText.textContent = prevBtnText;
+      }
+    });
+  }
+
   $$('[data-contact-intent]').forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', e => {
       const intent = link.dataset.contactIntent;
+      const modalType = link.dataset.modalType;
+      if (modalType) {
+        e.preventDefault();
+        openLeadModal(modalType);
+        return;
+      }
       showOrderSummary(intent ? `${state.city}, ${intent}` : '');
     });
   });
 
-  $('#cfgSubmit').addEventListener('click', () => {
-    const program = currentProgram();
+  $('#cfgSubmit').addEventListener('click', e => {
+    e.preventDefault();
     const tariff = selectedTariff();
-    const duration = tariff.trial ? 'Пробные 2 дня' : dayLabel(tariff.days);
-    const gift = tariff.gift ? ` (+${dayLabel(tariff.gift)} в подарок)` : '';
-    showOrderSummary(`${state.city}, ${program.name}, ${program.kcalLabel}, ${duration}${gift}, ${money(tariff.price)}`);
+    openLeadModal(tariff && tariff.trial ? 'trial' : 'order');
   });
+
+  const orderOpenBtn = $('#orderOpenBtn');
+  if (orderOpenBtn) {
+    orderOpenBtn.addEventListener('click', () => {
+      openLeadModal('callback');
+    });
+  }
 
   /* =======================================================
      КАРУСЕЛИ
@@ -572,8 +949,7 @@
      засорять рабочую статистику проверками на превью и стендах.
      ======================================================= */
   function initProductionAnalytics() {
-    const host = location.hostname.toLowerCase();
-    if (host !== 'vibiraiedu.ru' && host !== 'www.vibiraiedu.ru') return;
+    if (!isProductionHost()) return;
 
     const loadScript = src => {
       const s = document.createElement('script');

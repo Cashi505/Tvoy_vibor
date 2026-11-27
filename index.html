@@ -524,7 +524,7 @@
             <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Действует 3 месяца</li>
             <li><img src="assets/icons/ic-star.svg" alt="" width="22" height="22" aria-hidden="true">Отправим в мессенджер сразу</li>
           </ul>
-          <a class="btn btn--white gift__cta" href="#order" data-contact-intent="Подарочный сертификат">
+          <a class="btn btn--white gift__cta" href="#order" data-contact-intent="Подарочный сертификат" data-modal-type="certificate">
             Оформить сертификат
             <img src="assets/icons/arrow-dark.svg" alt="" width="24" height="24" aria-hidden="true">
           </a>
@@ -690,7 +690,7 @@
       </li>
     </ul>
 
-    <a class="btn btn--primary faq__cta" href="#order" data-contact-intent="Вопрос о питании или доставке">
+    <a class="btn btn--primary faq__cta" href="#order" data-contact-intent="Вопрос о питании или доставке" data-modal-type="callback">
       Остались вопросы?
       <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
     </a>
@@ -704,8 +704,14 @@
   <div class="order__in container">
     <div class="order__col">
       <h2 class="order__title">Начните с первой доставки</h2>
-      <p class="order__lead">Напишите нам или позвоните. Поможем выбрать программу и согласуем график доставки. На связи ежедневно с 9:00 до 23:00.</p>
+      <p class="order__lead">Оставьте заявку на сайте, напишите нам или позвоните. Поможем выбрать программу и согласуем график доставки. На связи ежедневно с 9:00 до 23:00.</p>
       <p class="order__summary" id="orderSummary" aria-live="polite" hidden></p>
+      <div class="order__actions">
+        <button class="btn btn--primary" type="button" id="orderOpenBtn">
+          Оставить заявку на сайте
+          <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+      </div>
       <ul class="order__channels" aria-label="Оформить через мессенджер">
         <li><a class="btn btn--white" target="_blank" rel="noopener" href="https://t.me/tvoivibor86">Telegram</a></li>
         <li><a class="btn btn--white" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=79026909192">WhatsApp</a></li>
@@ -747,10 +753,90 @@
     <div class="ftr__col ftr__links">
       <p class="ftr__cap">Связаться с нами</p>
       <a href="#order" data-contact-intent="">Оформить через мессенджер</a>
-      <a href="#order" data-contact-intent="Запрос коммерческого предложения">Партнёрам и бизнесу</a>
+      <a href="#order" data-contact-intent="Запрос коммерческого предложения" data-modal-type="business_quote">Партнёрам и бизнесу</a>
     </div>
   </div>
 </footer>
+
+<div class="modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__dialog" role="document">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть окно">&times;</button>
+    <div class="modal__body">
+      <h2 class="modal__title" id="leadModalTitle">Оформление заказа</h2>
+      <p class="modal__sub" id="leadModalSub">Менеджер свяжется с вами в рабочее время: ежедневно с 9:00 до 23:00.</p>
+      <div class="modal__summary" id="leadModalSummary" hidden></div>
+
+      <form class="modal__form" id="leadForm" novalidate>
+        <input type="hidden" name="type" id="lfType" value="order">
+        <input type="hidden" name="request_type" id="lfRequestType" value="">
+        <input type="hidden" name="kcal" id="lfKcal" value="">
+        <input type="hidden" name="days" id="lfDays" value="">
+        <input type="hidden" name="form_started_at" id="lfStartedAt" value="">
+        <div class="modal__hp" aria-hidden="true">
+          <label>Сайт <input type="text" name="website" id="lfWebsite" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <label class="mfield" id="lfCityWrap">
+          <span class="mfield__lab">Город *</span>
+          <select name="city" id="lfCity" required>
+            <option value="Сургут">Сургут</option>
+            <option value="Нефтеюганск">Нефтеюганск</option>
+          </select>
+        </label>
+
+        <label class="mfield">
+          <span class="mfield__lab">Ваше имя *</span>
+          <input type="text" name="name" id="lfName" placeholder="Как к вам обращаться" autocomplete="name" required>
+        </label>
+
+        <label class="mfield">
+          <span class="mfield__lab">Телефон *</span>
+          <input type="tel" name="phone" id="lfPhone" inputmode="tel" placeholder="+7 (999) 999-99-99" autocomplete="tel" required>
+        </label>
+
+        <fieldset class="mfield mfield--radios">
+          <legend class="mfield__lab">Удобный способ связи</legend>
+          <div class="mfield__pills">
+            <label class="mpill"><input type="radio" name="contact_method" value="Telegram" checked><span>Telegram</span></label>
+            <label class="mpill"><input type="radio" name="contact_method" value="MAX"><span>MAX</span></label>
+            <label class="mpill"><input type="radio" name="contact_method" value="Звонок"><span>Звонок</span></label>
+          </div>
+        </fieldset>
+
+        <label class="mfield" id="lfAddressWrap">
+          <span class="mfield__lab">Адрес доставки *</span>
+          <input type="text" name="address" id="lfAddress" placeholder="Улица, дом, корпус, квартира" autocomplete="street-address">
+        </label>
+
+        <label class="mfield" id="lfPromoWrap">
+          <span class="mfield__lab">Промокод (если есть)</span>
+          <input type="text" name="promocode" id="lfPromo" placeholder="Введите промокод">
+          <small class="mfield__hint">Скидки и акции не суммируются.</small>
+        </label>
+
+        <label class="mfield" id="lfCommentWrap" hidden>
+          <span class="mfield__lab" id="lfCommentLabel">Комментарий</span>
+          <textarea name="comment" id="lfComment" rows="2" placeholder="Удобное время или детали запроса"></textarea>
+        </label>
+
+        <label class="mcheck" id="lfConsentWrap">
+          <input type="checkbox" name="consent" id="lfConsent" required>
+          <span>Я принимаю <a href="/policy/" target="_blank" rel="noopener">политику конфиденциальности</a> и согласен на обработку персональных данных</span>
+        </label>
+
+        <p class="modal__err" id="leadFormErr" role="alert" hidden></p>
+
+        <button class="btn btn--primary modal__submit" type="submit" id="leadFormSubmit">
+          <span id="leadFormSubmitText">Оформить заказ</span>
+          <img src="assets/icons/arrow-white.svg" alt="" width="24" height="24" aria-hidden="true">
+        </button>
+      </form>
+
+      <div class="modal__state" id="leadModalState" hidden></div>
+    </div>
+  </div>
+</div>
 
 <aside class="cookie" id="cookieBanner" role="region" aria-label="Уведомление о cookie" hidden>
   <p>Мы используем файлы cookie для работы сайта и аналитики. Продолжая пользоваться сайтом, вы соглашаетесь с <a href="/policy/">политикой конфиденциальности</a>.</p>
