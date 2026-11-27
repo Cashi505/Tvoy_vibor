@@ -561,6 +561,8 @@ input,select{font:inherit;color:inherit}
   border:1px solid var(--line);
   border-radius:var(--r-pill);
   font-size:var(--fs-body);
+  -webkit-appearance:none;
+  -moz-appearance:none;
   appearance:none;
   transition:border-color .2s var(--ease);
 }
@@ -944,7 +946,7 @@ input,select{font:inherit;color:inherit}
   .day-chip__price{font-size:24px}
   .cfg__total{margin-top:55px}
   .cfg__submit,.faq__cta,.steps__cta,.rev__cta,.gift__cta,.calc__cta{
-    width:var(--m-btn);margin-inline:auto;
+    width:min(var(--m-btn), 100%);margin-inline:auto;
   }
   .faq__cta{margin-right:auto}
 
@@ -1010,7 +1012,7 @@ input,select{font:inherit;color:inherit}
   .calc__form{gap:25px;padding:32px 28px 37px}
   /* в мобильном макете подписи в полях по центру */
   .field input,.field select{text-align:center;padding-inline:22px}
-  .field select{background-position:right 16px center}
+  .field select{padding-inline:44px;background-position:right 16px center}
   .calc__res{border-radius:0;padding:38px 28px 0;text-align:center;align-items:center}
   .calc__pic{position:static;width:calc(87.5% + 28px);max-width:none;margin:24px -28px 0 auto}
 
